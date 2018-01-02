@@ -1,0 +1,62 @@
+Set up : 
+	Main Page:
+		Splash, Game Info, Navigation
+	Game Page:
+
+		Lobby / chat room?
+
+		Games:
+
+			Koi Koi:
+				Match cards, collect combos, koikoi or finish for points
+
+			War:
+				highest card wins
+
+			Memory:
+				match cards
+
+	Contact Page:
+		Place to leave comments
+		Email info
+
+================================================
+
+Use Socket.io to connect players for chat / multiplayer
+
+
+Koi Koi:
+ 12 'months'
+ 4 cards per month
+
+ N normal
+ S Scroll
+ R Red Ribbon
+ P Purple Ribbon
+ A Animal
+ B Bright
+
+ 1 N N S B
+ 2 N N S A
+ 3 N N S B
+ 4 N N R A
+ 5 N N R A
+ 6 N N P A
+ 7 N N R A
+ 8 N N A B
+ 9 N N P A/N
+ 10 N N P A
+ 11 N R A Rain
+ 12 N N N B
+
+10 N = 1 point +1 for each after
+5 random ribbons = 1 point +1 for each after
+5 random animals = 1 point +1 for each after
+Boar-Deer-Butterfly = 5 points 6a7a10a
+All 3 P = 6 points
+All 3 S = 6 points
+3 B = 6 points
+3 B + Rain = 8 points
+4 B = 10 points
+4 B + Rain = 15 points
+All for of month 4 points
