@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Nav = () => (
-  <nav className="navbar navbar-expand-lg navbar-dark bg-info">
+  <nav className="navbar navbar-expand-lg navbar-dark bg-danger">
     <Link className="navbar-brand" to="/">
       Hanafuda Flurry
     </Link>

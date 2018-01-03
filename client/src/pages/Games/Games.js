@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 import { Col, Row, Container } from '../../components/Grid';
 import { List, ListItem } from '../../components/List';
 import { Input, TextArea, FormBtn } from '../../components/Form';
-import logo from '../../logo.svg';
+import logo from '../../images/FullMoonBright.jpg';
 import '../../App.css';
 
-class Main extends Component {
+class Games extends Component {
   state = {
     user: '',
   };
@@ -35,7 +35,7 @@ class Main extends Component {
           <h1 className="App-title">Hanafuda!</h1>
         </header>
         <p className="App-intro">
-            Fun card games for the whole family, with japanese style cards.
+            Pick from War, Memory, and Koi Koi!
         </p>
       </div>
     );
