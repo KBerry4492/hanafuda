@@ -62,3 +62,59 @@ All 3 S = 6 points
 All for of month 4 points
 
 ====================================================
+
+Koi Koi page:
+
+Game Board
+
+	Opponent:
+		Hand:
+			cardbacks
+		Matches:
+			cardfronts
+			nums
+
+	Deck:
+		cardbacks
+
+		reset
+
+		home
+
+	Field:
+		5 x 2 slots
+			cardfronts
+
+	Monthly:
+		cardfronts
+
+		Scorebox
+
+	Player:
+		Hand:
+			cardfronts
+		Matches:
+			cardfronts
+			nums
+
+	KoiKoi / Finish
+		Points
+		continue?
+
+Deals dealers hand
+Deals first four
+Deals others hand
+Deals last four
+
+pick month
+
+Game starts with player then goes to winner
+
+if more than one matchpossible than put glow around matches and let player pick
+else match and bring to matches
+
+if plains > 10 +1 score and koikoi
+if animals > 5 +1 score and koikoi
+if ribbons > 5 +1 score and koikoi
+
+at end of each round, if score greater than player high score, update highscore
