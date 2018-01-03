@@ -1,15 +1,15 @@
 const router = require('express').Router();
-const articlesController = require('../../controllers/articlesController');
+const cardsController = require('../../controllers/cardsController');
 
 // Matches with "/api/saved"
 router
   .route('/')
-  .get(articlesController.findAll)
-  .post(articlesController.create);
+  .get(cardsController.findAll)
+  .post(cardsController.create);
 
-// Matches with "/api/articles/:id"
+// Matches with "/api/cards/:id"
 router
   .route('/:id')
-  .delete(articlesController.remove);
+  .delete(cardsController.remove);
 
 module.exports = router;

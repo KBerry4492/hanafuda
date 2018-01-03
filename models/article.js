@@ -1,12 +1,22 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const articleSchema = new Schema({
-  title: { type: String, required: true },
-  url: { type: String, required: true },
+const cardSchema = new Schema({
+  username: { type: String, required: true },
+  password: { type: String, required: true},
+  
   date: { type: Date }
 });
 
-const Articles = mongoose.model("Articles", articleSchema);
+// username: "Guest1",
+// password: "guestone",
+// wins: 0,
+// losses: 0,
+// koikoiHi: 0,
+// warHi: 0,
+// memHi: 0,
+// date: new Date(Date.now())
 
-module.exports = Articles;
+const Cards = mongoose.model("Cards", cardSchema);
+
+module.exports = Cards;

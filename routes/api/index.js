@@ -1,7 +1,7 @@
 const router = require('express').Router();
-const articleRoutes = require('./articles');
+const cardRoutes = require('./cards');
 
-// Article routes
-router.use('/saved', articleRoutes);
+// card routes
+router.use('/saved', cardRoutes);
 
 module.exports = router;
