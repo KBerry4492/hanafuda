@@ -37,6 +37,15 @@ class Games extends Component {
         <p className="App-intro">
             Pick from War, Memory, and Koi Koi!
         </p>
+        	<Link className="nav-link" to="/war">
+            War
+          </Link>
+          <Link className="nav-link" to="/koikoi">
+            KoiKoi
+          </Link>
+          <Link className="nav-link" to="/memory">
+            Memory
+          </Link>
       </div>
     );
   }
