@@ -19,29 +19,46 @@ class Memory extends Component {
 
   newCardArray = data => {
     const dataArray = data;
+    const months = ['jan', 'feb', 'march', 'apr', 'may', 'jun', 'july', 'aug', 'sept', 'oct', 'nov', 'dec'];
     let bigArray = [];
     let smallArray = [];
-    const months = ['jan', 'feb', 'march', 'apr', 'may', 'jun', 'july', 'aug', 'sept', 'oct', 'nov', 'dec'];
+    let cardArray = [];
 
     for (let i = 0; i < 12; i++) {
-      
-      
       
       for (let j = 0; j < dataArray.length; j++) {
 
         smallArray = dataArray.filter(item => {
           return item.month === months[i]
-        })
-
-      }
+        });
+      }//for each month push the cards associated with the month into an array
 
       bigArray.push(smallArray);
+    }//then push those arrary into a superarry
 
+  // console.log(bigArray);
 
-      // let cardPicker = Math.round(Math.random() * 4);
+  let newCA = this.cardRandom(bigArray);
+  console.log(newCA);
 
-    }
-  console.log(bigArray);
+  return newCA;
+
+  };
+
+  cardRandom = bigArray => {
+
+    let ranCards = [];
+
+    for (var i = 0; i < bigArray.length; i++) {
+      let cardPicker = Math.floor(Math.random() * 4);
+
+      ranCards.push(bigArray[i][cardPicker]);
+
+    }//pick a random card from each month.
+
+    // console.log(ranCards);
+    return ranCards;
+
   };
 
   handleCorrectGuess = newData => {
@@ -68,6 +85,10 @@ class Memory extends Component {
   };
 
   shuffleData = data => {
+
+    const cards = this.newCardArray(data);
+    console.log(cards);
+
     let i = data.length - 1;
     while (i > 0) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -80,7 +101,7 @@ class Memory extends Component {
   };
 
   handleItemClick = id => {
-    this.newCardArray(this.state.data);
+    
     let guessedCorrectly = false;
     const newData = this.state.data.map(item => {
       const newItem = { ...item };
