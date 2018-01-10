@@ -16,7 +16,7 @@ const images = [
 
 // console.log(images)
 
-const Deck = props => {
+export const Deck = props => {
 
 	// console.log(props.image)
 
@@ -37,5 +37,3 @@ const Deck = props => {
 	</div>
   );
 };
-
-export default Deck;

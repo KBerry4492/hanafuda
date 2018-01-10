@@ -1,3 +1,4 @@
 export * from "./Deck";
-export * from "./Card.js";
+export * from "./Card";
+export * from "./CardStock";
 export * from "./cards.json";
