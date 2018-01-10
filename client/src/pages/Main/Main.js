@@ -9,6 +9,8 @@ import logo from '../../images/cardback4.png';
 import bg from '../../images/Hanafuda_b2.jpg';
 import '../../App.css';
 
+const io = require('socket.io-client')
+const socket = io.connect("localhost:3001")
 
 class Main extends Component {
   state = {
@@ -16,6 +18,17 @@ class Main extends Component {
     headTitle: 'Hanafuda card games!',
     headTxt: 'Pick from War, Memory, and Koi Koi!'
   };
+
+  componentDidMount() {
+    socket.on('connect', data => {
+      socket.emit('message', 'Hello server, from me the client')
+    })
+
+    socket.on('gameMove', data => {
+      console.log(data);
+      // Update state/game based on returned data
+    })
+  }
 
   handleInputChange = event => {
     const { name, value } = event.target;
