@@ -8,11 +8,24 @@ import { Input, TextArea, FormBtn } from '../../components/Form';
 import logo from '../../images/FullMoonBright.jpg';
 import '../../App.css';
 
+const io = require('socket.io-client')
+const socket = io.connect("localhost:3001")
 
 class Main extends Component {
   state = {
     user: '',
   };
+
+  componentDidMount() {
+    socket.on('connect', data => {
+      socket.emit('message', 'Hello server, from me the client')
+    })
+
+    socket.on('gameMove', data => {
+      console.log(data);
+      // Update state/game based on returned data
+    })
+  }
 
   handleInputChange = event => {
     const { name, value } = event.target;
