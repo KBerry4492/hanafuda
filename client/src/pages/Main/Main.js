@@ -6,11 +6,10 @@ import { Container } from '../../components/Grid';
 // import { List, ListItem } from '../../components/List';
 // import { Input, TextArea, FormBtn } from '../../components/Form';
 import logo from '../../images/cardback4.png';
-import bg from '../../images/Hanafuda_b2.jpg';
 import '../../App.css';
 
-const io = require('socket.io-client')
-const socket = io.connect("localhost:3001")
+// const io = require('socket.io-client')
+// const socket = io.connect("localhost:3001")
 
 class Main extends Component {
   state = {
@@ -19,16 +18,16 @@ class Main extends Component {
     headTxt: 'Pick from War, Memory, and Koi Koi!'
   };
 
-  componentDidMount() {
-    socket.on('connect', data => {
-      socket.emit('message', 'Hello server, from me the client')
-    })
+  // componentDidMount() {
+  //   socket.on('connect', data => {
+  //     socket.emit('message', 'Hello server, from me the client')
+  //   })
 
-    socket.on('gameMove', data => {
-      console.log(data);
-      // Update state/game based on returned data
-    })
-  }
+  //   socket.on('gameMove', data => {
+  //     console.log(data);
+  //     // Update state/game based on returned data
+  //   })
+  // }
 
   handleInputChange = event => {
     const { name, value } = event.target;
@@ -50,8 +49,6 @@ class Main extends Component {
           <Header title={this.state.headTitle} text={this.state.headTxt} />
 
          <Container >
-
-          <img src={logo} className="App-logo" alt="logo" />
         
           <p className="App-intro">
               Fun card games for the whole family, with japanese style cards.
@@ -72,6 +69,7 @@ class Main extends Component {
                 <li>And Brights are worth three points</li>
               </ul>
             </p>
+            <br/>
 
             <h4> For Memory: </h4>
             <br/>
@@ -84,6 +82,7 @@ class Main extends Component {
                 <li>Refresh the page for new cards</li>
               </ul>
             </p>
+            <br/>
 
             <h4> For KoiKoi: </h4>
             <br/>

@@ -40,16 +40,19 @@ class Games extends Component {
           <Container>
 	          <img src={logo} className="App-logo left" alt="logo" />
 
-	          <Link className="nav-link" to="/war">
-	            War
+			  <div className ="link-space">
+		          <Link className="nav-link link-btns" to="/war">
+		            War
+		          </Link>
+		          <Link className="nav-link link-btns" to="/memory">
+		            Memory
+		          </Link>
+		          <Link className="nav-link link-btns" to="/koikoi">
+		            KoiKoi
 	          </Link>
-	          <Link className="nav-link" to="/memory">
-	            Memory
-	          </Link>
-	          <Link className="nav-link" to="/koikoi">
-	            KoiKoi
-	          </Link>
-	          
+
+	          </div>
+
 	          <img src={logo} className="App-logo right" alt="logo" />
           </Container>
          <Footer/>
