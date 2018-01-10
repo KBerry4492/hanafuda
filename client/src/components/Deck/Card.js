@@ -1,7 +1,10 @@
 import React from "react";
 import "./Card.css";
 
-const Card = props => (
+const Card = props => {
+	console.log(props.id)
+
+	return (
   <div
     role="img"
     aria-label="click item"
@@ -10,5 +13,5 @@ const Card = props => (
     className={`click-item${props.shake ? " shake" : ""}`}
   />
 );
-
+}
 export default Card;

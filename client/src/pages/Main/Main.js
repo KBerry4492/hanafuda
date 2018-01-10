@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
-import Jumbotron from '../../components/Jumbotron';
-// import API from '../../utils/API';
+// import Jumbotron from '../../components/Jumbotron';
+import {Header, Footer} from "../../components/Nav";
 // import { Link } from 'react-router-dom';
-// import { Col, Row, Container } from '../../components/Grid';
+import { Container } from '../../components/Grid';
 // import { List, ListItem } from '../../components/List';
-import { Input, TextArea, FormBtn } from '../../components/Form';
-import logo from '../../images/FullMoonBright.jpg';
+// import { Input, TextArea, FormBtn } from '../../components/Form';
+import logo from '../../images/cardback4.png';
+import bg from '../../images/Hanafuda_b2.jpg';
 import '../../App.css';
 
 
 class Main extends Component {
   state = {
     user: '',
+    headTitle: 'Hanafuda card games!',
+    headTxt: 'Pick from War, Memory, and Koi Koi!'
   };
 
   handleInputChange = event => {
@@ -31,13 +34,62 @@ class Main extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
+          <Header title={this.state.headTitle} text={this.state.headTxt} />
+
+         <Container >
+
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Hanafuda!</h1>
-        </header>
-        <p className="App-intro">
-            Fun card games for the whole family, with japanese style cards.
-        </p>
+        
+          <p className="App-intro">
+              Fun card games for the whole family, with japanese style cards.
+          </p>
+
+          <div className="introSheet">
+
+            <h3> Instructions: </h3>
+            <br/>
+
+            <h4> For War: </h4>
+            <br/>
+            <p> 
+              <ul>
+                <li>Click on your deck to begin</li>
+                <li>Plains are worth one point</li>
+                <li>Animals and Ribbons are worth two points</li>
+                <li>And Brights are worth three points</li>
+              </ul>
+            </p>
+
+            <h4> For Memory: </h4>
+            <br/>
+            <p> 
+              <ul>
+                <li>Click on a card to begin</li>
+                <li>There is one card for each month</li>
+                <li>For every unique card you pick, you get one point</li>
+                <li>Clicking on the same card twice means you lose!</li>
+                <li>Refresh the page for new cards</li>
+              </ul>
+            </p>
+
+            <h4> For KoiKoi: </h4>
+            <br/>
+            <p> 
+              <ul>
+                <li>Match cards in your hand to cards on the field</li>
+                <li>Cards can only be matched within the same month</li>
+                <li>If you can't make any matches, you must discard a card to the field</li>
+                <li>Once you make enough matches to get a combo,
+                 you can choose to end the round, 
+                 or KoiKoi, doubling your points and keep playing the hand.</li>
+                <li>If you do KoiKoi, and the Opponent gets a combo, you lose any points you would get!</li>
+              </ul>
+            </p>
+
+          </div>
+         
+        </Container>
+        <Footer/>
       </div>
     );
   }

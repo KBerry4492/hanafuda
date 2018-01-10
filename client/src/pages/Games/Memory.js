@@ -1,20 +1,20 @@
 import React, { Component } from "react";
-// import Nav from "../../components/Nav";
-// import Header from "../Header";
+import {Header, Footer} from "../../components/Nav";
 import {Container} from "../../components/Grid";
 import Card from "../../components/Deck/Card.js";
-// import Footer from "../Footer";
 import data from "../../components/Deck/cards.json";
 
 class Memory extends Component {
   state = {
     data,
     score: 0,
-    topScore: 0
+    topScore: 0,
+    headTxt: "Click a card to gain points",
+    headTitle:"Memory"
   };
 
   componentDidMount() {
-    this.setState({ data: this.shuffleData(this.state.data) });
+    this.setState({ data: this.newCardArray(data) });    
   };
 
   newCardArray = data => {
@@ -22,7 +22,6 @@ class Memory extends Component {
     const months = ['jan', 'feb', 'march', 'apr', 'may', 'jun', 'july', 'aug', 'sept', 'oct', 'nov', 'dec'];
     let bigArray = [];
     let smallArray = [];
-    let cardArray = [];
 
     for (let i = 0; i < 12; i++) {
       
@@ -41,7 +40,9 @@ class Memory extends Component {
   let newCA = this.cardRandom(bigArray);
   console.log(newCA);
 
-  return newCA;
+  let cards = this.shuffleData(newCA);
+
+  return cards;
 
   };
 
@@ -85,10 +86,6 @@ class Memory extends Component {
   };
 
   shuffleData = data => {
-
-    const cards = this.newCardArray(data);
-    console.log(cards);
-
     let i = data.length - 1;
     while (i > 0) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -101,7 +98,6 @@ class Memory extends Component {
   };
 
   handleItemClick = id => {
-    
     let guessedCorrectly = false;
     const newData = this.state.data.map(item => {
       const newItem = { ...item };
@@ -112,15 +108,18 @@ class Memory extends Component {
         }
       }
       return newItem;
-    });
+    });    
     guessedCorrectly
       ? this.handleCorrectGuess(newData)
       : this.handleIncorrectGuess(newData);
   };
 
+
+
   render() {
     return (
       <div>
+        <Header title={this.state.headTitle} text={this.state.headTxt} score={this.state.score} topScore={this.state.topScore}/>
         <Container>
           {this.state.data.map(item => (
             <Card
@@ -132,6 +131,7 @@ class Memory extends Component {
             />
           ))}
         </Container>
+        <Footer/>
       </div>
     );
   }

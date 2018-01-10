@@ -7,7 +7,7 @@ import War from './pages/Games/War';
 import Memory from './pages/Games/Memory';
 import KoiKoi from './pages/Games/KoiKoi';
 import NoMatch from './pages/NoMatch';
-import Nav from './components/Nav';
+import {Nav} from './components/Nav';
 import './App.css';
 
 const App = () => (
@@ -22,7 +22,6 @@ const App = () => (
         <Route exact path="/koikoi" component={KoiKoi} />
         <Route component={NoMatch} />
       </Switch>
-      <footer> Hey Hey </footer>
     </Container>
   </Router>
 );
