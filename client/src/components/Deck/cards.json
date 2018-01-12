@@ -164,7 +164,7 @@
     "month": "jun",
     "type": ["plain"],
     "cardName": "June 1",
-    "imgSrc": "/assets/images/cardback4.png",
+    "imgSrc": "/assets/images/jun1.png",
     "value": 1
   },
   {
@@ -172,7 +172,7 @@
     "month": "jun",
     "type": ["plain"],
     "cardName": "June 2",
-    "imgSrc": "/assets/images/cardback4.png",
+    "imgSrc": "/assets/images/jun2.png",
     "value": 1
   },
   {
@@ -180,7 +180,7 @@
     "month": "jun",
     "type": ["ribbon", "blue"],
     "cardName": "June 3",
-    "imgSrc": "/assets/images/cardback4.png",
+    "imgSrc": "/assets/images/jun3.png",
     "value": 2
   },
   {
@@ -188,7 +188,7 @@
     "month": "jun",
     "type": ["animal", "cho"],
     "cardName": "June 4",
-    "imgSrc": "/assets/images/cardback4.png",
+    "imgSrc": "/assets/images/jun4.png",
     "value": 2
   },
   {
@@ -196,7 +196,7 @@
     "month": "july",
     "type": ["plain"],
     "cardName": "July 1",
-    "imgSrc": "/assets/images/cardback4.png",
+    "imgSrc": "/assets/images/jul1.png",
     "value": 1
   },
   {
@@ -204,15 +204,15 @@
     "month": "july",
     "type": ["plain"],
     "cardName": "July 2",
-    "imgSrc": "/assets/images/cardback4.png",
+    "imgSrc": "/assets/images/jul2.png",
     "value": 1
   },
   {
     "id": 27,
     "month": "july",
-    "type": ["ribbon", "blue"],
+    "type": ["ribbon"],
     "cardName": "July 3",
-    "imgSrc": "/assets/images/cardback4.png",
+    "imgSrc": "/assets/images/jul3.png",
     "value": 2
   },
   {
@@ -220,7 +220,7 @@
     "month": "july",
     "type": ["animal", "ino"],
     "cardName": "July 4",
-    "imgSrc": "/assets/images/cardback4.png",
+    "imgSrc": "/assets/images/jul4.png",
     "value": 2
   },
   {

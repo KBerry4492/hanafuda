@@ -8,7 +8,7 @@ export const Header = (props, children) => (
     <img src={logo} className="logo" alt="logo" />
     <h4>{props.text}</h4>
 
-    {props.score ? <p> Score: {props.score} </p> : ""}  {props.topScore ? <p> Top Score: {props.topScore} </p> : ""}
+    {props.score ? <span> Score: {props.score}  | </span> : ""}{props.topScore ? <span> Top Score: {props.topScore} </span> : ""}
     
     
   </header>
