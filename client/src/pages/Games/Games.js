@@ -37,10 +37,6 @@ class Games extends Component {
       this.getArticles();
     }
   };
-// <header className="App-header">
-//           <img src={logo} className="App-logo" alt="logo" />
-//           <h1 className="App-title">Hanafuda!</h1>
-//         </header>
 
   render() {
     return (
@@ -66,7 +62,6 @@ class Games extends Component {
 
 	          <img src={logo} className="App-logo right" alt="logo" />
           </Container>
-         <Footer/>
 
         <SlidingPanel addMessage={this.addMessage} messages={this.state.messages}/>
 
