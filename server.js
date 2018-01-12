@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const routes = require("./routes");
 const app = express();
 const http = require("http").Server(app);
-const io = require("socket.io")(http);
+var io = require("socket.io")(http);
 const PORT = process.env.PORT || 3001;
 
 // Configure body parser for AJAX requests
@@ -25,13 +25,33 @@ mongoose.connect(
   }
 );
 
-io.on("connection", function(socket){
-  console.log("A user connected!");
-  socket.on("disconnect", function(){
-  	console.log("user disconnected");
-  });
+// io.on("connection", function(socket){
+//   console.log("A user connected!");
+//   socket.on("disconnect", function(){
+//   	console.log("user disconnected");
+//   });
+// });
+
+var socket = require('socket.io');
+
+
+
+server = app.listen(PORT, function(){
+    console.log('server is running on port 3001')
 });
+
+io = socket(server);
+
+io.on('connection', (socket) => {
+    console.log(socket.id);
+
+    socket.on('SEND_MESSAGE', function(data){
+        io.emit('RECEIVE_MESSAGE', data);
+    })
+});
+
+
 // Start the API server
-http.listen(PORT, function() {
-  console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
-});
+// http.listen(PORT, function() {
+//   console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
+// });

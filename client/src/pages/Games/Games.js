@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import {Header} from "../../components/Nav";
 import { Container } from '../../components/Grid';
+import { SlidingPanel } from "../../components/SlidingPanel";
 // import { List, ListItem } from '../../components/List';
 // import { Input, TextArea, FormBtn } from '../../components/Form';
 import logo from '../../images/FullMoonBright.jpg';
@@ -12,7 +13,15 @@ export class Games extends Component {
   state = {
     user: '',
     headTitle: 'Hanafuda games!',
-    headTxt: 'Pick from War, Memory, and Koi Koi!'
+    headTxt: 'Pick from War, Memory, and Koi Koi!',
+    messages: []
+
+  };
+
+  addMessage = data => {
+      console.log(data);
+      this.setState({messages: [...this.state.messages, data]});
+      console.log(this.state.messages);
   };
 
   handleInputChange = event => {
@@ -36,6 +45,8 @@ export class Games extends Component {
   render() {
     return (
       <div className="App">
+
+
         <Header title={this.state.headTitle} text={this.state.headTxt} />
           <Container>
 	          <img src={logo} className="App-logo left" alt="logo" />
@@ -55,6 +66,9 @@ export class Games extends Component {
 
 	          <img src={logo} className="App-logo right" alt="logo" />
           </Container>
+
+        <SlidingPanel addMessage={this.addMessage} messages={this.state.messages}/>
+
       </div>
     );
   }
