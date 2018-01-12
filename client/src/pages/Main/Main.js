@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
-// import Jumbotron from '../../components/Jumbotron';
-import {Header, Footer} from "../../components/Nav";
-// import { Link } from 'react-router-dom';
+import {Header} from "../../components/Nav";
 import { Container } from '../../components/Grid';
 import { Instructions } from '../../components/Instructions';
-// import { List, ListItem } from '../../components/List';
-// import { Input, TextArea, FormBtn } from '../../components/Form';
 import '../../App.css';
 
 // const io = require('socket.io-client')
@@ -57,7 +53,6 @@ class Main extends Component {
           <Instructions/>
          
         </Container>
-        <Footer/>
       </div>
     );
   }

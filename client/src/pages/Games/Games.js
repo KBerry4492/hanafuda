@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import Jumbotron from '../../components/Jumbotron';
 import { Link } from 'react-router-dom';
-import {Header, Footer} from "../../components/Nav";
+import {Header} from "../../components/Nav";
 import { Container } from '../../components/Grid';
 import { SlidingPanel } from "../../components/SlidingPanel";
 // import { List, ListItem } from '../../components/List';
@@ -9,7 +9,7 @@ import { SlidingPanel } from "../../components/SlidingPanel";
 import logo from '../../images/FullMoonBright.jpg';
 import '../../App.css';
 
-class Games extends Component {
+export class Games extends Component {
   state = {
     user: '',
     headTitle: 'Hanafuda games!',
@@ -69,5 +69,3 @@ class Games extends Component {
     );
   }
 }
-
-export default Games;

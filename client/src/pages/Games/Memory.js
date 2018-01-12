@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import {Header, Footer} from "../../components/Nav";
+import {Header} from "../../components/Nav";
 import {Container} from "../../components/Grid";
 import {Card} from "../../components/Deck";
 import data from "../../components/Deck/cards.json";
 
-class Memory extends Component {
+export class Memory extends Component {
   state = {
     data,
     score: 0,
@@ -131,10 +131,7 @@ class Memory extends Component {
             />
           ))}
         </Container>
-        <Footer/>
       </div>
     );
   }
 }
-
-export default Memory;

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {Header, Footer} from "../../components/Nav";
+import {Header} from "../../components/Nav";
 import {Container, Row} from "../../components/Grid";
 import {CardStock} from "../../components/Deck/CardStock";
 import data from "../../components/Deck/cards.json";
@@ -149,7 +149,6 @@ export class Yaku extends Component {
 	        </div>
 
         </Container>
-        <Footer/>
       </div>
     );
   }
