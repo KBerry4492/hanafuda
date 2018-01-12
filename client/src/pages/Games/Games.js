@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import {Header, Footer} from "../../components/Nav";
 import { Container } from '../../components/Grid';
+import { SlidingPanel } from "../../components/SlidingPanel";
 // import { List, ListItem } from '../../components/List';
 // import { Input, TextArea, FormBtn } from '../../components/Form';
 import logo from '../../images/FullMoonBright.jpg';
@@ -36,6 +37,8 @@ class Games extends Component {
   render() {
     return (
       <div className="App">
+
+
         <Header title={this.state.headTitle} text={this.state.headTxt} />
           <Container>
 	          <img src={logo} className="App-logo left" alt="logo" />
@@ -56,6 +59,9 @@ class Games extends Component {
 	          <img src={logo} className="App-logo right" alt="logo" />
           </Container>
          <Footer/>
+
+        <SlidingPanel />
+
       </div>
     );
   }
