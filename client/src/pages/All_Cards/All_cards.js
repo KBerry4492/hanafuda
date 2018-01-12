@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import {Header, Footer} from "../../components/Nav";
 import {Container} from "../../components/Grid";
-import {Card} from "../../components/Deck/";
-import data from "../../components/Deck/cards";
+import {CardStock} from "../../components/Deck";
+import data from "../../components/Deck/cards.json";
 
 export class All_cards extends Component {
   state = {
@@ -23,12 +23,10 @@ export class All_cards extends Component {
         <Header title={this.state.headTitle} text={this.state.headTxt}/>
         <Container>
           {this.state.data.map(item => (
-            <Card
+            <CardStock
               key={item.id}
               id={item.id}
-              name={item.cardsName}
-              shake={!this.state.score && this.state.topScore}
-              handleClick={this.handleItemClick}
+              name={item.cardName}
               image={item.imgSrc}
             />
           ))}

@@ -1,7 +1,7 @@
 import React from "react";
 import "./Card.css";
 
-const Card = props => (
+export const Card = props => (
   <div
     name={props.name}
     role="img"
@@ -12,4 +12,3 @@ const Card = props => (
   />
 );
 
-export default Card;
