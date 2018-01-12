@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {Header, Footer} from "../../components/Nav";
+import {Header} from "../../components/Nav";
 import {Container} from "../../components/Grid";
 import {CardStock} from "../../components/Deck";
 import data from "../../components/Deck/cards.json";
@@ -31,7 +31,6 @@ export class All_cards extends Component {
             />
           ))}
         </Container>
-        <Footer/>
       </div>
     );
   }

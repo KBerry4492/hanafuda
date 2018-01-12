@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 // import Jumbotron from '../../components/Jumbotron';
 import { Link } from 'react-router-dom';
-import {Header, Footer} from "../../components/Nav";
+import {Header} from "../../components/Nav";
 import { Container } from '../../components/Grid';
 // import { List, ListItem } from '../../components/List';
 // import { Input, TextArea, FormBtn } from '../../components/Form';
 import logo from '../../images/FullMoonBright.jpg';
 import '../../App.css';
 
-class Games extends Component {
+export class Games extends Component {
   state = {
     user: '',
     headTitle: 'Hanafuda games!',
@@ -55,10 +55,7 @@ class Games extends Component {
 
 	          <img src={logo} className="App-logo right" alt="logo" />
           </Container>
-         <Footer/>
       </div>
     );
   }
 }
-
-export default Games;

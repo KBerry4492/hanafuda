@@ -1,13 +1,8 @@
 import React from "react";
-import {Row, Col} from '../Grid';
+import './playspace.css'
 
-export const Container = ({ children }) =>
+export const Playspace = ({ children }) =>
+  <div className="play_space">
+    {children}
+  </div>;
 
-<div >
-
-
-
-
-
-
-</div>;

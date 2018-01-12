@@ -1,0 +1,9 @@
+.play_space{
+
+	background-image: url(../../images/swirl_pattern.png);
+	margin: 20px 5px;
+	padding: 10px;
+	border: 5px solid rgb(220, 220, 220);
+	border-radius: 3px;
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
