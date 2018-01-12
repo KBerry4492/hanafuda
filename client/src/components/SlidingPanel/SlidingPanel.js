@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import SlidingPane from 'react-sliding-pane';
+import Chat from '../Form/Chat';
 import 'react-sliding-pane/dist/react-sliding-pane.css';
+
 
 
 class SlidingPanel extends Component {
@@ -17,7 +19,7 @@ class SlidingPanel extends Component {
         return (
         <div>
             <button onClick={ () => this.setState({ isPaneOpenLeft: true }) }>
-                    Open chat on left</button>
+                Open chat on left</button>
             <button onClick={() => this.setState({ isPaneOpen: true })}>Open chat on right</button>
             <SlidingPane
                 className='some-custom-class'
@@ -30,10 +32,7 @@ class SlidingPanel extends Component {
                     // triggered on "<" on left top click or on outside click
                     this.setState({ isPaneOpen: false });
                 } }>
-                <div>User A: You're going down!<br />
-                     User B: Hey, that's my line.</div>
-                <br />
-                <img src='img.png' />
+                <Chat/>
             </SlidingPane>
             <SlidingPane
                 isOpen={ this.state.isPaneOpenLeft }
@@ -41,9 +40,7 @@ class SlidingPanel extends Component {
                 from='left'
                 width='300px'
                 onRequestClose={ () => this.setState({ isPaneOpenLeft: false }) }>
-                <div>User A: Hey.<br />
-                     User B: You're going down!
-                </div>
+                <Chat/>
             </SlidingPane>
         </div>
         )
