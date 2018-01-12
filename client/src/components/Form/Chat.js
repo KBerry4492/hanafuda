@@ -8,7 +8,6 @@ class Chat extends React.Component{
         this.state = {
             username: '',
             message: '',
-            messages: []
         };
 
         this.socket = io('localhost:3001');
@@ -43,7 +42,7 @@ class Chat extends React.Component{
                                 <div className="card-title">Global Chat</div>
                                 <hr/>
                                 <div className="messages">
-                                    {this.state.messages.map(message => {
+                                    {this.props.messages.map(message => {
                                         return (
                                             <div>{message.author}: {message.message}</div>
                                         )
@@ -56,7 +55,7 @@ class Chat extends React.Component{
                                 <br/>
                                 <input type="text" placeholder="Message" className="form-control" value={this.state.message} onChange={ev => this.setState({message: ev.target.value})}/>
                                 <br/>
-                                <button onClick={this.sendMessage} className="btn btn-primary form-control">Send</button>
+                                <button onClick={() => this.props.addMessage({author: this.state.author, message: this.state.message})} className="btn btn-primary form-control">Send</button>
                             </div>
                         </div>
                     </div>

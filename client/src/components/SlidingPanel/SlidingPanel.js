@@ -32,7 +32,7 @@ class SlidingPanel extends Component {
                     // triggered on "<" on left top click or on outside click
                     this.setState({ isPaneOpen: false });
                 } }>
-                <Chat/>
+                <Chat addMessage={this.props.addMessage} messages={this.props.messages}/>
             </SlidingPane>
             <SlidingPane
                 isOpen={ this.state.isPaneOpenLeft }
@@ -40,7 +40,7 @@ class SlidingPanel extends Component {
                 from='left'
                 width='300px'
                 onRequestClose={ () => this.setState({ isPaneOpenLeft: false }) }>
-                <Chat/>
+                <Chat addMessage={this.props.addMessage} messages={this.props.messages}/>
             </SlidingPane>
         </div>
         )

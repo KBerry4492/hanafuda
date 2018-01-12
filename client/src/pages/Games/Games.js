@@ -13,7 +13,15 @@ class Games extends Component {
   state = {
     user: '',
     headTitle: 'Hanafuda games!',
-    headTxt: 'Pick from War, Memory, and Koi Koi!'
+    headTxt: 'Pick from War, Memory, and Koi Koi!',
+    messages: []
+
+  };
+
+  addMessage = data => {
+      console.log(data);
+      this.setState({messages: [...this.state.messages, data]});
+      console.log(this.state.messages);
   };
 
   handleInputChange = event => {
@@ -60,7 +68,7 @@ class Games extends Component {
           </Container>
          <Footer/>
 
-        <SlidingPanel />
+        <SlidingPanel addMessage={this.addMessage} messages={this.state.messages}/>
 
       </div>
     );
