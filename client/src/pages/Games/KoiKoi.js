@@ -18,6 +18,7 @@ export class KoiKoi extends Component {
     oppHand: [],
     oppMatch: [],
     monthCard:0,
+    turn: true,
     dealer: true
   };
 
@@ -72,41 +73,149 @@ export class KoiKoi extends Component {
 
   };//End dealing
 
+  autoDeck = data => {
+
+    let deck = this.state.deck;
+    let Matches = [];
+    let field = data;
+    let topCard = deck.slice(0, 1)[0]
+    const turn = this.state.turn;
+
+    let hasMatches = false;
+
+    const toMatch = (this.state.field.filter(item => {
+      return item.month.includes(topCard.month)
+    }))
+
+    if (toMatch.length >= 1) { hasMatches = true; }
+
+    if (turn === true){
+      Matches = this.state.playerMatch;
+    }
+    else{
+      Matches = this.state.oppMatch;
+    }
+
+    if (hasMatches){
+      Matches.push(
+        field.filter( data => {
+            return data.month === topCard.month;
+          }).slice(0, 1)[0]
+      )
+
+      Matches.push(topCard);
+
+      turn
+        ? this.setState({playerMatch: Matches})
+        : this.setState({oppMatch: Matches});
+    }
+
+    else{field.push(topCard)}
+    
+
+    let newDeck = deck.slice(1)
+
+    this.setState({
+      field: field,
+      deck: newDeck
+    });
+    
+
+
+  };
+
   handleItemClick = card => {
-    console.log(card);
 
-    if (card.location === "pHand") {
+    // let selected = card;
+    // let fieldMatch = 0;
+    let hasMatches = false;
+    let pMatches = this.state.playerMatch;
+    let pHand = this.state.playerHand;
+    let Field = this.state.field;
 
-      let selected = card;
+    if (card.location === "pHand") {     
 
       const toMatch = (this.state.field.filter(item => {
         return item.month.includes(card.month)
       }))
 
-      console.log("toMatch");
-      console.log(toMatch);
+      if (toMatch.length >= 1) { hasMatches = true; }
 
+      if(hasMatches){
+
+        if (toMatch.length === 1) {
+
+          pMatches.push(
+            Field.filter( data => {
+                return data.month === card.month;
+              }).slice(0, 1)[0]
+          )
+
+          pMatches.push(
+            pHand.filter( data => {
+                return data.id === card.id;
+              }).slice(0, 1)[0]
+          )
+
+          let newHand = pHand.filter( data => {
+                return data.id !== card.id;
+              })
+
+          let newField = Field.filter( data => {
+                return data.month !== card.month;
+              })
+
+          Field = newField;
+
+          this.setState({
+            field: newField,
+            playerHand: newHand,
+            playerMatch: pMatches
+          });
+
+          this.autoDeck(Field);
+          // this.setState({turn: false});
+
+        }
+
+        else {
+          for (var i = 0; i < toMatch.length; i++) {
+            console.log(toMatch[i])
+          }
+
+        }//more than one match on the field
+      }
+
+      else{//discard a card no matches
+
+        const discard = pHand.filter( data => {
+          return data.id === card.id;
+        })[0]
+        console.log("discard");
+        console.log(discard);
+
+        Field.push(discard);
+
+        let newHand = pHand.filter( data => {
+          return data.id !== card.id;
+        })
+
+        this.setState({
+          playerHand: newHand,
+          field: Field
+        });
+
+        this.autoDeck(Field);
+
+      }
 
     }///end of player picked card
 
     else if (card.location === "field") {}
-    // let guessedCorrectly = false;
-    // const newData = this.state.data.map(item => {
-    //   const newItem = { ...item };
-    //   if (newItem.id === id) {
-    //     if (!newItem.clicked) {
-    //       newItem.clicked = true;
-    //       guessedCorrectly = true;
-    //     }
-    //   }
-    //   return newItem;
-    // });    
-    // guessedCorrectly
-    //   ? this.handleCorrectGuess(newData)
-    //   : this.handleIncorrectGuess(newData);
-  };
+    else if (card.location === "pMatches") {}
 
-  
+    
+  }; //end handleClick 
 
   render() {
     return (
@@ -209,7 +318,8 @@ export class KoiKoi extends Component {
                       name={item.cardName}
                       image={item.imgSrc}
                       month={item.month}
-                      glow={!this.state.score && this.state.topScore}
+                      type={item.type}
+                      glow={false}
                       handleClick={this.handleItemClick}
                       location="field"
                     />
@@ -244,6 +354,7 @@ export class KoiKoi extends Component {
                   name={item.cardName}
                   month={item.month}
                   image={item.imgSrc}
+                  type={item.type}
                   glow={!this.state.score && this.state.topScore}
                   handleClick={this.handleItemClick}
                   location="pHand"
@@ -258,26 +369,28 @@ export class KoiKoi extends Component {
                       return item.type.includes("plain")
                     })
                     .map(items => (
-                      <CardStock
+                      <GameCard
                         key={items.id}
                         id={items.id}
                         name={items.cardName}
                         image={items.imgSrc}
+                        handleClick={this.handleItemClick}
                         location="pMatches"
                       />
                     ))}
                   </Col>
-
+ 
                   <Col size='3'>
                     {this.state.playerMatch.filter(item => {
                       return item.type.includes("ribbon")
                     })
                     .map(items => (
-                      <CardStock
+                      <GameCard
                         key={items.id}
                         id={items.id}
                         name={items.cardName}
                         image={items.imgSrc}
+                        handleClick={this.handleItemClick}
                         location="pMatches"
                       />
                     ))}
@@ -288,11 +401,12 @@ export class KoiKoi extends Component {
                       return item.type.includes("animal")
                     })
                     .map(items => (
-                      <CardStock
+                      <GameCard
                         key={items.id}
                         id={items.id}
                         name={items.cardName}
                         image={items.imgSrc}
+                        handleClick={this.handleItemClick}
                         location="pMatches"
                       />
                     ))}
@@ -303,15 +417,17 @@ export class KoiKoi extends Component {
                       return item.type.includes("bright")
                     })
                     .map(items => (
-                      <CardStock
+                      <GameCard
                         key={items.id}
                         id={items.id}
                         name={items.cardName}
                         image={items.imgSrc}
+                        handleClick={this.handleItemClick}
                         location="pMatches"
                       />
                     ))}
                   </Col>
+
                 </Row>
             </Col>
           
