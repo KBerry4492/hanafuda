@@ -1,5 +1,5 @@
 import React from "react";
-import imgSrc from "../../images/cardback4.png";
+import imgSrc from "../../images/cardback5.png";
 import "./cardBack.css";
 
 export const CardBack = props => (

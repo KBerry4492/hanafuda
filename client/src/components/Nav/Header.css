@@ -11,13 +11,12 @@
 
 .header h1 {
   margin: 0;
-  margin-bottom: 20px;
   font-size: 4rem;
 }
 
 .logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+  animation: App-logo-spin infinite 30s linear;
+  height: 100px;
   margin: 10px;
 }
 

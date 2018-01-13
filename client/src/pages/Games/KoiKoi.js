@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {Header} from "../../components/Nav";
 import {Container, Row, Col, Playspace} from "../../components/Grid";
-import {CardStock, CardBack} from "../../components/Deck";
+import {CardStock, CardBack, GameCard} from "../../components/Deck";
 import data from "../../components/Deck/cards";
 
 export class KoiKoi extends Component {
@@ -36,20 +36,12 @@ export class KoiKoi extends Component {
       i--;
     }
 
-    this.dealCards();
-
-    
-    console.log(this.state.playerHand);
-    
+    this.dealCards();    
     return data; 
 
   };//end shuffle.
 
   dealCards = data => {
-
-    console.log("ping");
-
-    // this.setState({deck: this.state.data})
 
     let deck = this.state.deck;
     let pHand = this.state.playerHand;
@@ -61,29 +53,58 @@ export class KoiKoi extends Component {
       for (var i = 0; i < 4; i++) {
         pHand.push(deck.splice(0, 1)[0]);
       }
-
       for (var k = 0; k < 4; k++) {
         board.push(deck.splice(0, 1)[0]);
       }
-
       for (var l = 0; l < 4; l++) {
         oHand.push(deck.splice(0, 1)[0]);
       }
 
     }
-    console.log(deck);
-    console.log(pHand);
-    console.log(board);
-    console.log(oHand);
 
-    this.setState({monthCard: deck[0]})
-    
-    this.setState({deck: deck})
-    this.setState({playerHand: pHand})
-    this.setState({field: board})
-    this.setState({oppHand: oHand})
+    this.setState({
+      monthCard: deck[0],
+      deck: deck,
+      playerHand: pHand,
+      field: board,
+      oppHand: oHand
+    })
 
   };//End dealing
+
+  handleItemClick = card => {
+    console.log(card);
+
+    if (card.location === "pHand") {
+
+      let selected = card;
+
+      const toMatch = (this.state.field.filter(item => {
+        return item.month.includes(card.month)
+      }))
+
+      console.log("toMatch");
+      console.log(toMatch);
+
+
+    }///end of player picked card
+
+    else if (card.location === "field") {}
+    // let guessedCorrectly = false;
+    // const newData = this.state.data.map(item => {
+    //   const newItem = { ...item };
+    //   if (newItem.id === id) {
+    //     if (!newItem.clicked) {
+    //       newItem.clicked = true;
+    //       guessedCorrectly = true;
+    //     }
+    //   }
+    //   return newItem;
+    // });    
+    // guessedCorrectly
+    //   ? this.handleCorrectGuess(newData)
+    //   : this.handleIncorrectGuess(newData);
+  };
 
   
 
@@ -94,26 +115,27 @@ export class KoiKoi extends Component {
         <Container>
           <Playspace>
 
-          <Row>
-            <Col size='sm'>
+          <Row>{/* Opponent */} 
+            <Col size='4'>{/* Hand */}
               {this.state.oppHand.map(item => (
-                <CardStock
+                <CardBack
                   key={item.id}
                   id={item.id}
                   name={item.cardName}
-                  image={item.imgSrc}
+                  type={item.type}
+                  month={item.month}
                 />
               ))}
             </Col>
 
-            <Col size='sm'>
+            <Col size='8'>{/* Matches */}
               <Row>
                 <Col size='3'>
                     {this.state.oppMatch.filter(item => {
                       return item.type.includes("plain")
                     })
                     .map(items => (
-                      <CardStock
+                      <GameCard
                         key={items.id}
                         id={items.id}
                         name={items.cardName}
@@ -127,7 +149,7 @@ export class KoiKoi extends Component {
                       return item.type.includes("ribbon")
                     })
                     .map(items => (
-                      <CardStock
+                      <GameCard
                         key={items.id}
                         id={items.id}
                         name={items.cardName}
@@ -141,7 +163,7 @@ export class KoiKoi extends Component {
                       return item.type.includes("animal")
                     })
                     .map(items => (
-                      <CardStock
+                      <GameCard
                         key={items.id}
                         id={items.id}
                         name={items.cardName}
@@ -155,7 +177,7 @@ export class KoiKoi extends Component {
                       return item.type.includes("bright")
                     })
                     .map(items => (
-                      <CardStock
+                      <GameCard
                         key={items.id}
                         id={items.id}
                         name={items.cardName}
@@ -166,26 +188,30 @@ export class KoiKoi extends Component {
                 </Row>
             </Col>
 
-          </Row>          
+          </Row> {/* Opponent */} 
 
           <br/>
 
-          <Row> 
+          <Row>{/* Field */} 
             
             <Col size='2'>
 
-             <CardBack/>
+             <CardBack/>{/* Deck */}
 
             </Col>
 
-            <Col size='8'>
+            <Col size='8'>{/* Field */} 
                 <Row>
                   {this.state.field.map(item => (
-                    <CardStock
+                    <GameCard
                       key={item.id}
                       id={item.id}
                       name={item.cardName}
                       image={item.imgSrc}
+                      month={item.month}
+                      glow={!this.state.score && this.state.topScore}
+                      handleClick={this.handleItemClick}
+                      location="field"
                     />
                   ))}
                 </Row>
@@ -193,7 +219,8 @@ export class KoiKoi extends Component {
 
             <Col size='2'>
             <div className="monthly">
-              <Row>Month Card
+              <Row>
+                Month Card
                   <CardStock
                     id={this.state.monthCard.id}
                     name={this.state.monthCard.cardName}
@@ -204,24 +231,28 @@ export class KoiKoi extends Component {
             </div>
             </Col>
 
-          </Row>
+          </Row>{/* Field */}
 
           <br/>
 
-          <Row>
-            <Col size='sm'>
+          <Row>{/* Player */}
+            <Col size='4'>{/* Hand */}
               {this.state.playerHand.map(item => (
-                <CardStock
+                <GameCard
                   key={item.id}
                   id={item.id}
                   name={item.cardName}
+                  month={item.month}
                   image={item.imgSrc}
+                  glow={!this.state.score && this.state.topScore}
+                  handleClick={this.handleItemClick}
+                  location="pHand"
                 />
               ))}
             </Col>
 
-            <Col size='sm'>
-                <Row>
+            <Col size='8'>
+                <Row>{/* Matches */}
                   <Col size='3'>
                     {this.state.playerMatch.filter(item => {
                       return item.type.includes("plain")
@@ -232,6 +263,7 @@ export class KoiKoi extends Component {
                         id={items.id}
                         name={items.cardName}
                         image={items.imgSrc}
+                        location="pMatches"
                       />
                     ))}
                   </Col>
@@ -246,6 +278,7 @@ export class KoiKoi extends Component {
                         id={items.id}
                         name={items.cardName}
                         image={items.imgSrc}
+                        location="pMatches"
                       />
                     ))}
                   </Col>
@@ -260,6 +293,7 @@ export class KoiKoi extends Component {
                         id={items.id}
                         name={items.cardName}
                         image={items.imgSrc}
+                        location="pMatches"
                       />
                     ))}
                   </Col>
@@ -274,13 +308,14 @@ export class KoiKoi extends Component {
                         id={items.id}
                         name={items.cardName}
                         image={items.imgSrc}
+                        location="pMatches"
                       />
                     ))}
                   </Col>
                 </Row>
             </Col>
           
-          </Row>
+          </Row>{/* Player */}
 
           </Playspace>
         </Container>

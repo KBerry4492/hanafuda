@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {Header} from "../../components/Nav";
-import {Container} from "../../components/Grid";
+import {Container, Row, Col, Playspace} from "../../components/Grid";
 import {Card} from "../../components/Deck";
 import data from "../../components/Deck/cards.json";
 
@@ -71,6 +71,14 @@ export class Memory extends Component {
       score: newScore,
       topScore: newTopScore
     });
+    
+    if (newScore >= 12) {
+      this.setState({
+        headTxt: "Congratulations, You Win!",
+      });
+      //playerWins();
+      setTimeout(function(){ this.location.reload(); }, 3000);
+    }
   };
 
   handleIncorrectGuess = data => {
@@ -121,15 +129,25 @@ export class Memory extends Component {
       <div>
         <Header title={this.state.headTitle} text={this.state.headTxt} score={this.state.score} topScore={this.state.topScore}/>
         <Container>
-          {this.state.data.map(item => (
-            <Card
-              key={item.id}
-              id={item.id}
-              shake={!this.state.score && this.state.topScore}
-              handleClick={this.handleItemClick}
-              image={item.imgSrc}
-            />
-          ))}
+          <Row>
+            <Col size="1"></Col>
+            <Col size="10"><Playspace>
+            <Row>
+            {this.state.data.map(item => (
+              <Col size="3">
+              <Card
+                key={item.id}
+                id={item.id}
+                shake={!this.state.score && this.state.topScore}
+                handleClick={this.handleItemClick}
+                image={item.imgSrc}
+              />
+              </Col>
+            ))}
+            </Row>
+            </Playspace></Col>
+            <Col size="1"></Col>
+          </Row>
         </Container>
       </div>
     );

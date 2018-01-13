@@ -6,7 +6,7 @@ import { Container } from '../../components/Grid';
 import { SlidingPanel } from "../../components/SlidingPanel";
 // import { List, ListItem } from '../../components/List';
 // import { Input, TextArea, FormBtn } from '../../components/Form';
-import logo from '../../images/FullMoonBright.jpg';
+import logo from '../../images/wujiFish.png';
 import '../../App.css';
 
 export class Games extends Component {
