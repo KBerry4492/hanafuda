@@ -292,7 +292,7 @@
     "month": "oct",
     "type": ["plain"],
     "cardName": "Oct 1",
-    "imgSrc": "/assets/images/cardback5.png",
+    "imgSrc": "/assets/images/oct1.png",
     "value": 1
   },
   {
@@ -300,7 +300,7 @@
     "month": "oct",
     "type": ["plain"],
     "cardName": "Oct 2",
-    "imgSrc": "/assets/images/cardback5.png",
+    "imgSrc": "/assets/images/oct2.png",
     "value": 1
   },
   {
@@ -308,7 +308,7 @@
     "month": "oct",
     "type": ["ribbon", "blue"],
     "cardName": "Oct 3",
-    "imgSrc": "/assets/images/cardback5.png",
+    "imgSrc": "/assets/images/oct3.png",
     "value": 2
   },
   {
@@ -316,7 +316,7 @@
     "month": "oct",
     "type": ["animal", "shika"],
     "cardName": "Oct 4",
-    "imgSrc": "/assets/images/cardback5.png",
+    "imgSrc": "/assets/images/oct4.png",
     "value": 2
   },
   {
@@ -324,7 +324,7 @@
     "month": "nov",
     "type": ["plain"],
     "cardName": "Nov 1",
-    "imgSrc": "/assets/images/cardback5.png",
+    "imgSrc": "/assets/images/nov1.png",
     "value": 1
   },
   {
@@ -332,7 +332,7 @@
     "month": "nov",
     "type": ["ribbon", "red"],
     "cardName": "Nov 2",
-    "imgSrc": "/assets/images/cardback5.png",
+    "imgSrc": "/assets/images/nov2.png",
     "value": 2
   },
   {
@@ -340,7 +340,7 @@
     "month": "nov",
     "type": ["animal"],
     "cardName": "Nov 3",
-    "imgSrc": "/assets/images/cardback5.png",
+    "imgSrc": "/assets/images/nov3.png",
     "value": 2
   },
   {
@@ -348,7 +348,7 @@
     "month": "nov",
     "type": ["bright", "rain"],
     "cardName": "Nov 4",
-    "imgSrc": "/assets/images/cardback5.png",
+    "imgSrc": "/assets/images/nov4.png",
     "value": 3
   },
   {
@@ -356,7 +356,7 @@
     "month": "dec",
     "type": ["plain"],
     "cardName": "Dec 1",
-    "imgSrc": "/assets/images/cardback5.png",
+    "imgSrc": "/assets/images/dec1.png",
     "value": 1
   },
   {
@@ -364,7 +364,7 @@
     "month": "dec",
     "type": ["plain"],
     "cardName": "Dec 2",
-    "imgSrc": "/assets/images/cardback5.png",
+    "imgSrc": "/assets/images/dec2.png",
     "value": 1
   },
   {
@@ -372,7 +372,7 @@
     "month": "dec",
     "type": ["plain"],
     "cardName": "Dec 3",
-    "imgSrc": "/assets/images/cardback5.png",
+    "imgSrc": "/assets/images/dec3.png",
     "value": 1
   },
   {
@@ -380,7 +380,7 @@
     "month": "dec",
     "type": ["bright"],
     "cardName": "Dec 4",
-    "imgSrc": "/assets/images/cardback5.png",
+    "imgSrc": "/assets/images/dec4.png",
     "value": 3
   }
 
