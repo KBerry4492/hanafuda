@@ -96,123 +96,262 @@ export class KoiKoi extends Component {
       Matches = this.state.oppMatch;
     }
 
-    if (hasMatches){
+    if (hasMatches){//if there is a match, slice it out of the field array and push it into the match array along with the top card
       Matches.push(
         field.filter( data => {
             return data.month === topCard.month;
           }).slice(0, 1)[0]
       )
 
+      let fieldMatch = field.filter( data => {
+            return data.month === topCard.month;
+          }).slice(0, 1)[0]
+
+      let newField = field.filter( data => {
+            return data.id !== fieldMatch.id;
+          })
+
       Matches.push(topCard);
 
-      turn
-        ? this.setState({playerMatch: Matches})
-        : this.setState({oppMatch: Matches});
+      if (turn === true) //if turn is true it is the player else the opponent
+        { 
+          this.setState({
+            playerMatch: Matches,
+            turn: false})
+            this.oppTurn(this.state.oppHand)          
+        }
+
+        else{
+          this.setState({oppMatch: Matches});
+        }
     }
 
-    else{field.push(topCard)}
+    else{field.push(topCard)} // if there are no matches, push to field
     
 
-    let newDeck = deck.slice(1)
+    let newDeck = deck.slice(1) //remove top card from deck
 
     this.setState({
       field: field,
       deck: newDeck
     });
-    
-
-
   };
 
-  handleItemClick = card => {
+  pickRandom = hand => {
+    console.log("pickRandom")
+    let ranCN = (Math.round(Math.random() * hand.length));
+    return ranCN;
+  };
 
-    // let selected = card;
-    // let fieldMatch = 0;
+  oppTurn = hand => {
+    console.log("oppTurn")
+    console.log(this.state.turn)
+
+    let hasMatches = false;
+    let oMatches = this.state.oppMatch;
+    let oHand = this.state.oppHand;
+    let Field = this.state.field;
+    let canMatch = [];
+
+    for (var i = 0; i < hand.length; i++) {
+      for (var j = 0; j < Field.length; j++) {
+        if (Field[j].month === hand[i.month]){
+          canMatch.push(Field[j]);
+        }
+      }
+    }
+
+    console.log("canMatch")
+    console.log(canMatch)
+
+    if (canMatch.length >= 1) { hasMatches = true; }
+    // const toMatch = (Field.filter(item => {
+    //   return item.month.includes(card.month)
+    // }))
+
+    // if (toMatch.length >= 1) { hasMatches = true; }
+
+    if(hasMatches){
+
+      let ranCard = canMatch[this.pickRandom(canMatch)];
+      const card = ranCard;
+
+      if (canMatch.length === 1) {
+
+        oMatches.push(
+          Field.filter( data => {
+              return data.month === card.month;
+            }).slice(0, 1)[0]
+        )
+
+        oMatches.push(
+          oHand.filter( data => {
+              return data.id === card.id;
+            }).slice(0, 1)[0]
+        )
+
+        let newHand = oHand.filter( data => {
+              return data.id !== card.id;
+            })
+
+        let newField = Field.filter( data => {
+              return data.month !== card.month;
+            })
+
+        Field = newField;
+
+        this.setState({
+          field: newField,
+          oppHand: newHand,
+          oppMatch: oMatches
+        });
+
+        this.autoDeck(Field);
+
+        this.setState({turn: true});
+
+      }
+
+      else {
+        for (var i = 0; i < canMatch.length; i++) {
+          console.log(canMatch[i])
+          this.setState({turn: true});
+        }
+
+      }//more than one match on the field
+    }
+
+    else{//discard a card no matches
+      console.log("discard Opponent")
+
+      const card = hand[this.pickRandom(hand)];
+
+      const discard = oHand.filter( data => {
+        return data.id === card.id;
+      })[0]
+
+      Field.push(discard);
+
+      let newHand = oHand.filter( data => {
+        return data.id !== card.id;
+      })
+
+    this.setState({
+      oppHand: newHand,
+      field: Field
+    });
+
+    this.autoDeck(Field);
+
+    this.setState({turn:  true});
+
+    }
+  }; //end opp turn
+
+  handleItemClick = card => {
+    console.log("handleClick")
+
     let hasMatches = false;
     let pMatches = this.state.playerMatch;
     let pHand = this.state.playerHand;
     let Field = this.state.field;
 
-    if (card.location === "pHand") {     
+    console.log(this.state.turn)
+    
+    if (this.state.turn === true) {
+    
+      if (card.location === "pHand") {
 
-      const toMatch = (this.state.field.filter(item => {
-        return item.month.includes(card.month)
-      }))
+        // let selected = pHand.filter( data => {
+        //       return data.id === card.id;
+        //     })[0];
+        // console.log("selected")
+        // console.log(selected)     
 
-      if (toMatch.length >= 1) { hasMatches = true; }
+        const toMatch = (this.state.field.filter(item => {
+          return item.month.includes(card.month)
+        }))
 
-      if(hasMatches){
+        if (toMatch.length >= 1) { hasMatches = true; }
 
-        if (toMatch.length === 1) {
+        if(hasMatches){
 
-          pMatches.push(
-            Field.filter( data => {
-                return data.month === card.month;
-              }).slice(0, 1)[0]
-          )
+          if (toMatch.length === 1) {
 
-          pMatches.push(
-            pHand.filter( data => {
-                return data.id === card.id;
-              }).slice(0, 1)[0]
-          )
+            pMatches.push(
+              Field.filter( data => {
+                  return data.month === card.month;
+                }).slice(0, 1)[0]
+            )
+
+            pMatches.push(
+              pHand.filter( data => {
+                  return data.id === card.id;
+                }).slice(0, 1)[0]
+            )
+
+            let newHand = pHand.filter( data => {
+                  return data.id !== card.id;
+                })
+
+            let newField = Field.filter( data => {
+                  return data.month !== card.month;
+                })
+
+            Field = newField;
+
+            this.setState({
+              field: newField,
+              playerHand: newHand,
+              playerMatch: pMatches
+            });
+
+            this.autoDeck(Field);
+
+          }
+
+          else {
+            for (var i = 0; i < toMatch.length; i++) {
+              console.log(toMatch[i])
+            }
+
+          }//more than one match on the field
+        }
+
+        else{//discard a card no matches
+
+          const discard = pHand.filter( data => {
+            return data.id === card.id;
+          })[0]
+          console.log("discard");
+          console.log(discard);
+
+          Field.push(discard);
 
           let newHand = pHand.filter( data => {
-                return data.id !== card.id;
-              })
-
-          let newField = Field.filter( data => {
-                return data.month !== card.month;
-              })
-
-          Field = newField;
+            return data.id !== card.id;
+          })
 
           this.setState({
-            field: newField,
             playerHand: newHand,
-            playerMatch: pMatches
+            field: Field
           });
 
           this.autoDeck(Field);
-          // this.setState({turn: false});
+
+          this.setState({turn: false});
+
+          this.oppTurn(this.state.oppHand);
 
         }
 
-        else {
-          for (var i = 0; i < toMatch.length; i++) {
-            console.log(toMatch[i])
-          }
+      }///end of player picked card
 
-        }//more than one match on the field
-      }
+      else if (card.location === "field") {}
 
-      else{//discard a card no matches
+    }//if player turn work
 
-        const discard = pHand.filter( data => {
-          return data.id === card.id;
-        })[0]
-        console.log("discard");
-        console.log(discard);
-
-        Field.push(discard);
-
-        let newHand = pHand.filter( data => {
-          return data.id !== card.id;
-        })
-
-        this.setState({
-          playerHand: newHand,
-          field: Field
-        });
-
-        this.autoDeck(Field);
-
-      }
-
-    }///end of player picked card
-
-    else if (card.location === "field") {}
-    else if (card.location === "pMatches") {}
+    else{} //if not don't
 
     
   }; //end handleClick 
