@@ -77,7 +77,7 @@ export class KoiKoi extends Component {
 
     let deck = this.state.deck;
     let Matches = [];
-    let field = data;
+    let field = this.state.field;
     let topCard = deck.slice(0, 1)[0]
     const turn = this.state.turn;
 
@@ -107,6 +107,9 @@ export class KoiKoi extends Component {
             return data.month === topCard.month;
           }).slice(0, 1)[0]
 
+      console.log('fieldMatch')
+      console.log(fieldMatch)
+
       let newField = field.filter( data => {
             return data.id !== fieldMatch.id;
           })
@@ -118,7 +121,7 @@ export class KoiKoi extends Component {
           this.setState({
             playerMatch: Matches,
             turn: false})
-            this.oppTurn(this.state.oppHand)          
+            // this.oppTurn(this.state.oppHand)          
         }
 
         else{
@@ -143,7 +146,7 @@ export class KoiKoi extends Component {
     { 
       this.setState({
         turn: false})
-        this.oppTurn(this.state.oppHand)          
+        // this.oppTurn(this.state.oppHand)          
     }
 
     else{
@@ -151,13 +154,13 @@ export class KoiKoi extends Component {
         turn: true,
       });
     }
-  };
+  };//the deck turn
 
   pickRandom = hand => {
     console.log("pickRandom")
-    let ranCN = (Math.round(Math.random() * hand.length));
+    let ranCN = (Math.floor(Math.random() * hand.length));
     return ranCN;
-  };
+  };//random number generator
 
   oppTurn = hand => {
     console.log("oppTurn")
@@ -175,7 +178,7 @@ export class KoiKoi extends Component {
       for (var j = 0; j < Field.length; j++) {
 
         if (Field[j].month === hand[i].month){
-          canMatch.push(Field[j]);
+          canMatch.push(hand[i]);
         }
       }
     }
@@ -191,57 +194,44 @@ export class KoiKoi extends Component {
     // if (toMatch.length >= 1) { hasMatches = true; }
 
     if(oHasMatches){
+      
+      const card = canMatch[this.pickRandom(canMatch)];
 
-      let ranCard = canMatch[this.pickRandom(canMatch)];
-      const card = ranCard;
-      console.log('ranCard and card');
-      console.log(ranCard);
+      console.log('------------');
+      console.log('card');
       console.log(card);
       console.log('------------');
 
-      if (canMatch.length === 1) {
+      const fieldMatch = Field.filter( data => {
+        return data.month === card.month;
+      }).slice(0, 1)[0]
 
-        oMatches.push(
-          Field.filter( data => {
-              return data.month === card.month;
-            }).slice(0, 1)[0]
-        )
+      oMatches.push(fieldMatch);
 
-        oMatches.push(
-          oHand.filter( data => {
-              return data.id === card.id;
-            }).slice(0, 1)[0]
-        )
+      oMatches.push(
+        oHand.filter( data => {
+            return data.id === card.id;
+          }).slice(0, 1)[0]
+      )
 
-        let newHand = oHand.filter( data => {
-              return data.id !== card.id;
-            })
+      let newHand = oHand.filter( data => {
+            return data.id !== card.id;
+          })
 
-        let newField = Field.filter( data => {
-              return data.month !== card.month;
-            })
+      let newField = Field.filter( data => {
+            return data.id !== fieldMatch.id;
+          })
 
-        Field = newField;
+      Field = newField;
 
-        this.setState({
-          field: newField,
-          oppHand: newHand,
-          oppMatch: oMatches
-        });
+      this.setState({
+        field: newField,
+        oppHand: newHand,
+        oppMatch: oMatches
+      });
 
-        this.autoDeck(Field);
-      }
+      // this.autoDeck(Field);
 
-      else {
-        console.log("manyMatch")
-        for (var i = 0; i < canMatch.length; i++) {
-
-          console.log(canMatch[i])
-          this.setState({turn: true});
-        }
-        console.log("=======")
-
-      }//more than one match on the field
     }
 
     else{//discard a card no matches
