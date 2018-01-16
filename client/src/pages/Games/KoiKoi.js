@@ -79,7 +79,6 @@ export class KoiKoi extends Component {
     let Matches = [];
     let field = this.state.field;
     let topCard = deck.slice(0, 1)[0]
-    const turn = this.state.turn;
 
     let hasMatches = false;
 
@@ -87,14 +86,16 @@ export class KoiKoi extends Component {
       return item.month.includes(topCard.month)
     }))
 
-    if (toMatch.length >= 1) { hasMatches = true; }
-
-    if (turn === true){
+    console.log("deck start");
+    console.log(this.state.turn);
+    if (this.state.turn === true){
       Matches = this.state.playerMatch;
     }
     else{
       Matches = this.state.oppMatch;
     }
+
+    if (toMatch.length >= 1) { hasMatches = true; }   
 
     if (hasMatches){//if there is a match, slice it out of the field array and push it into the match array along with the top card
       Matches.push(
@@ -116,12 +117,12 @@ export class KoiKoi extends Component {
 
       Matches.push(topCard);
 
-      if (turn === true) //if turn is true it is the player else the opponent
+      if (this.state.turn === true) //if turn is true it is the player else the opponent
         { 
           this.setState({
             playerMatch: Matches,
             turn: false})
-            // this.oppTurn(this.state.oppHand)          
+            this.oppTurn(this.state.oppHand)          
         }
 
         else{
@@ -142,11 +143,12 @@ export class KoiKoi extends Component {
       deck: newDeck
     })
 
-    if (turn === true) //if turn is true it is the player else the opponent
+    console.log("leaving deck");
+    console.log(this.state.turn);
+
+    if (this.state.turn === true) //if turn is true it is the player else the opponent
     { 
-      this.setState({
-        turn: false})
-        // this.oppTurn(this.state.oppHand)          
+      this.setState({turn: false})          
     }
 
     else{
@@ -197,11 +199,6 @@ export class KoiKoi extends Component {
       
       const card = canMatch[this.pickRandom(canMatch)];
 
-      console.log('------------');
-      console.log('card');
-      console.log(card);
-      console.log('------------');
-
       const fieldMatch = Field.filter( data => {
         return data.month === card.month;
       }).slice(0, 1)[0]
@@ -230,6 +227,9 @@ export class KoiKoi extends Component {
         oppMatch: oMatches
       });
 
+      console.log("leaving opponent");
+      console.log(this.state.turn);
+
       // this.autoDeck(Field);
 
     }
@@ -257,7 +257,9 @@ export class KoiKoi extends Component {
       oppHand: newHand,
       field: Field
     });
-
+      
+    console.log("leaving opponent");
+    console.log(this.state.turn);
     // this.autoDeck(Field);
     }
   }; //end opp turn
@@ -315,6 +317,7 @@ export class KoiKoi extends Component {
             });
 
             this.autoDeck(Field);
+            this.oppTurn(this.state.oppHand);
           }
 
           else {
@@ -346,6 +349,7 @@ export class KoiKoi extends Component {
           });
 
           this.autoDeck(Field);
+          this.oppTurn(this.state.oppHand);
         }
 
       }///end of player picked card
