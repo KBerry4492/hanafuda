@@ -73,22 +73,23 @@ export class KoiKoi extends Component {
 
   };//End dealing
 
-  autoDeck = data => {
+  autoDeck = (field_data, turn, deck_data) => {
 
-    let deck = this.state.deck;
+    let deck = deck_data;
     let Matches = [];
-    let field = this.state.field;
+    let field = field_data;
     let topCard = deck.slice(0, 1)[0]
 
     let hasMatches = false;
 
-    const toMatch = (this.state.field.filter(item => {
+    const toMatch = (field.filter(item => {
       return item.month.includes(topCard.month)
     }))
 
     console.log("deck start");
-    console.log(this.state.turn);
-    if (this.state.turn === true){
+    console.log(deck);
+
+    if (turn === true){
       Matches = this.state.playerMatch;
     }
     else{
@@ -98,82 +99,103 @@ export class KoiKoi extends Component {
     if (toMatch.length >= 1) { hasMatches = true; }   
 
     if (hasMatches){//if there is a match, slice it out of the field array and push it into the match array along with the top card
-      Matches.push(
-        field.filter( data => {
-            return data.month === topCard.month;
-          }).slice(0, 1)[0]
-      )
 
       let fieldMatch = field.filter( data => {
             return data.month === topCard.month;
           }).slice(0, 1)[0]
 
-      console.log('fieldMatch')
+      console.log('Deck fieldMatch')
       console.log(fieldMatch)
+
+      console.log('Deck topCard')
+      console.log(topCard)
+
+      Matches.push(fieldMatch)
+
+      console.log('Deck Matches')
+      console.log(Matches)      
 
       let newField = field.filter( data => {
             return data.id !== fieldMatch.id;
           })
+      console.log('Deck newField')
+      console.log(newField)
 
       Matches.push(topCard);
 
-      if (this.state.turn === true) //if turn is true it is the player else the opponent
+      if (turn === true) //if turn is true it is the player else the opponent
         { 
           this.setState({
+            field: newField,
             playerMatch: Matches,
-            turn: false})
-            this.oppTurn(this.state.oppHand)          
+            turn: true})
+            setTimeout(this.oppTurn(this.state.oppHand, newField, turn, deck), 1000)         
         }
 
         else{
           this.setState({
+            field: newField,
             turn: true,
             oppMatch: Matches
-          });
+          })
+          console.log("turnCycleOver");
         }
     }
 
-    else{field.push(topCard)} // if there are no matches, push to field
-    
-
-    let newDeck = deck.slice(1) //remove top card from deck
-
-    this.setState({
-      field: field,
-      deck: newDeck
-    })
-
-    console.log("leaving deck");
-    console.log(this.state.turn);
-
-    if (this.state.turn === true) //if turn is true it is the player else the opponent
-    { 
-      this.setState({turn: false})          
-    }
-
     else{
+      field.push(topCard)  // if there are no matches, push to field
+    
+      let newDeck = deck.slice(1) //remove top card from deck
+      
+      deck = newDeck;
+
       this.setState({
-        turn: true,
-      });
+        field: field,
+        deck: newDeck
+      })
+
+      console.log("leaving deck");
+      console.log(this.state.turn);
+      
+      //if turn is true it is the player else the opponent
+      
+      if (turn === true){
+        setTimeout(this.oppTurn(this.state.oppHand, field, turn, deck), 1000)
+      }
+      else{
+        this.setState({
+          turn: true,
+        })
+        console.log("turnCycleOver");
+      }
     }
   };//the deck turn
 
   pickRandom = hand => {
-    console.log("pickRandom")
+
     let ranCN = (Math.floor(Math.random() * hand.length));
     return ranCN;
   };//random number generator
 
-  oppTurn = hand => {
+  oppTurn = (hand, field, turn, deck) => {
+
     console.log("oppTurn")
-    console.log(this.state.turn)
+    console.log(turn)
     console.log(hand)
 
     let oHasMatches = false;
     let oMatches = this.state.oppMatch;
     let oHand = this.state.oppHand;
-    let Field = this.state.field;
+    let Field = field;
     let canMatch = [];
+    let turnO = turn;
+
+    if (turnO === true) {
+      console.log('state turn')
+      console.log(this.state.turn)
+      turnO = false;
+    }
+    else{return turnO}
 
     for (var i = 0; i < hand.length; i++) {
 
@@ -204,12 +226,22 @@ export class KoiKoi extends Component {
       }).slice(0, 1)[0]
 
       oMatches.push(fieldMatch);
+      console.log("card");
+      console.log(card);
+      console.log("fieldMatch");
+      console.log(fieldMatch);
+
+      console.log("oMatches");
+      console.log(oMatches);
 
       oMatches.push(
         oHand.filter( data => {
             return data.id === card.id;
           }).slice(0, 1)[0]
       )
+
+      console.log("oMatches");
+      console.log(oMatches);
 
       let newHand = oHand.filter( data => {
             return data.id !== card.id;
@@ -228,9 +260,9 @@ export class KoiKoi extends Component {
       });
 
       console.log("leaving opponent");
-      console.log(this.state.turn);
+      console.log(turnO);
 
-      // this.autoDeck(Field);
+      this.autoDeck(Field, turnO, deck);
 
     }
 
@@ -259,8 +291,8 @@ export class KoiKoi extends Component {
     });
       
     console.log("leaving opponent");
-    console.log(this.state.turn);
-    // this.autoDeck(Field);
+    console.log(turn);
+    this.autoDeck(Field, turnO, deck);
     }
   }; //end opp turn
 
@@ -271,14 +303,14 @@ export class KoiKoi extends Component {
     let pMatches = this.state.playerMatch;
     let pHand = this.state.playerHand;
     let Field = this.state.field;
+    let turn = this.state.turn;
+    let Deck = this.state.deck
 
-    console.log(this.state.turn)
-    
-    if (this.state.turn === true) {
+    if (turn === true) {
     
       if (card.location === "pHand") {   
 
-        const toMatch = (this.state.field.filter(item => {
+        const toMatch = (Field.filter(item => {
           return item.month.includes(card.month)
         }))
 
@@ -309,18 +341,22 @@ export class KoiKoi extends Component {
                 })
 
             Field = newField;
+            console.log("pMatches");
+            console.log(pMatches);
+            console.log("Field");
+            console.log(Field);
 
             this.setState({
-              field: newField,
+              field: Field,
               playerHand: newHand,
               playerMatch: pMatches
             });
 
-            this.autoDeck(Field);
-            this.oppTurn(this.state.oppHand);
+            this.autoDeck(Field, turn, Deck)
+            // setTimeout(this.oppTurn(this.state.oppHand), 2000)
           }
 
-          else {
+          else {//more than one match on the field
             for (var i = 0; i < toMatch.length; i++) {
               console.log(toMatch[i])
             }
@@ -348,8 +384,8 @@ export class KoiKoi extends Component {
             field: Field
           });
 
-          this.autoDeck(Field);
-          this.oppTurn(this.state.oppHand);
+          this.autoDeck(Field, turn, Deck);
+          // this.oppTurn(this.state.oppHand);
         }
 
       }///end of player picked card
