@@ -73,6 +73,10 @@ export class KoiKoi extends Component {
 
   };//End dealing
 
+  roundOver = () => {
+    alert("Round Over, Refresh to Play Again.")
+  };
+
   autoDeck = (field_data, turn, deck_data) => {
 
     let deck = deck_data;
@@ -139,6 +143,9 @@ export class KoiKoi extends Component {
             oppMatch: Matches
           })
           console.log("turnCycleOver");
+          if (this.state.playerHand.length === 1) {
+            setTimeout(this.roundOver(), 5000);
+          }
         }
     }
 
@@ -167,6 +174,9 @@ export class KoiKoi extends Component {
           turn: true,
         })
         console.log("turnCycleOver");
+        if (this.state.playerHand.length === 1) {
+          setTimeout(this.roundOver(), 5000);
+        }
       }
     }
   };//the deck turn
@@ -488,6 +498,9 @@ export class KoiKoi extends Component {
             <Col size='2'>
 
              <CardBack/>{/* Deck */}
+
+             <a href="/koikoi">Reset</a>
+
 
             </Col>
 
