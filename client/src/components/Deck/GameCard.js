@@ -7,6 +7,6 @@ export const GameCard = props => (
     role="img"
     onClick={() => props.handleClick(props)}
     style={{ backgroundImage: `url("${props.image}")` }}
-    className={`card${props.glow ? " glow" : ""}`}
+    className={`Game_card${props.glow ? " glow" : ""}`}
   />
 );

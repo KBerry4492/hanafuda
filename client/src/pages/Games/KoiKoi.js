@@ -520,8 +520,11 @@ export class KoiKoi extends Component {
       }
 
 
-      else if (card.location === "field") {
+      else if (card.location === "field" && this.state.playerCard !== undefined) {
         this.playerTurn(this.state.playerCard, card);
+        this.setState({
+          playerCard: undefined
+        })
       }
 
     }//if player turn work
