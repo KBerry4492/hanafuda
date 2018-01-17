@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import {Header} from "../../components/Nav";
 import {Container, Row, Col, Playspace} from "../../components/Grid";
 import {Card} from "../../components/Deck";
-import {Audio, BGM} from "../../components/Audio";
+import {Audio} from "../../components/Audio";
 import data from "../../components/Deck/cards.json";
 
 export class Memory extends Component {
@@ -12,9 +12,7 @@ export class Memory extends Component {
     topScore: 0,
     headTxt: "Click a card to gain points",
     headTitle:"Memory",
-    sound:'none',
-    soundPlay:false,
-    bgm:true
+    soundPlay:false
   };
 
   componentDidMount() {
@@ -66,9 +64,7 @@ export class Memory extends Component {
 
   playerWins = music => {
     this.setState({
-      sound: music,
-      soundPlay: true,
-      bgm:false
+      soundPlay: true
     }, () => {
         const x = document.getElementById('victory')
         x.play();
@@ -90,8 +86,7 @@ export class Memory extends Component {
       this.setState({
         headTxt: "Congratulations, You Win!",
       }, () => {
-        this.playerWins('fanfare');
-
+        this.playerWins();
       });
       
     }
@@ -146,7 +141,6 @@ export class Memory extends Component {
       <div>
         <Header title={this.state.headTitle} text={this.state.headTxt} score={this.state.score} topScore={this.state.topScore}/>
         <Audio playSound={this.state.soundPlay}/>
-        <BGM playSound={this.state.bgm} sound='background'/>
         <Container>
           <Row>
             <Col size="1"></Col>
