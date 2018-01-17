@@ -59,6 +59,18 @@
   color: #fff;
 }
 
+.resetBtn{
+  margin: 5px;
+  padding: 5px 10px;
+  background-color:#555;
+  color: white;
+  border-radius: 5px; 
+  float: left;
+  border:black 2px solid;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+ 
+}
+
 /*.left{
   float: left;
 }
