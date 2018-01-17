@@ -2,9 +2,8 @@ import React, { Component } from "react";
 import {Header} from "../../components/Nav";
 import {Container, Row, Col, Playspace} from "../../components/Grid";
 import {CardStock, CardBack, GameCard, MatchCard} from "../../components/Deck";
+import {BGM} from "../../components/Audio";
 import data from "../../components/Deck/cards";
-
-const Promise = require("bluebird");
 
 export class KoiKoi extends Component {
   state = {
@@ -23,6 +22,7 @@ export class KoiKoi extends Component {
     turn: true,
     roundPointsP: 0,
     roundPointsO: 0,
+    bgm:true,
     dealer: true
   };
 
@@ -108,11 +108,15 @@ export class KoiKoi extends Component {
   };//End dealing
 
   roundOver = () => {
+    this.setState({
+      headTxt:"Round Over, Refresh to Play Again."
+    });
     console.log("Round Over, Refresh to Play Again.")
   };//end of round
 
   checkPoints = (turn) => {
     let Matches = 0;
+
     if (turn === 'player') {
       Matches = this.state.playerMatch;
     }
@@ -140,33 +144,34 @@ export class KoiKoi extends Component {
     let newPoints = 0;
 
     if (Plains.length >= 10) {
-      newPoints += (Plains.length - 9)
+      newPoints += (Plains.length - 9);
     }
     if (Ribbons.length >= 5) {
-      newPoints += (Ribbons.length - 4)
+      newPoints += (Ribbons.length - 4);
     }
     if (Animals.length >= 5) {
-      newPoints += (Animals.length - 4)
+      newPoints += (Animals.length - 4);
     }
     if (Brights.length === 3) {
-      newPoints += (8)
+      newPoints += (8);
     }
 
     if (turn === 'player') {
-      // this.setState({
-      //   roundPointsP: (this.state.roundPointsP + newPoints)
-      // }, () => )
-      
+      this.setState({
+        roundPointsP: (this.state.roundPointsP + newPoints)
+      }, () => this.oppTurn());
     }
     else if (turn === 'opponent') {
-
+      this.setState({
+        roundPointsO: (this.state.roundPointsO + newPoints)
+      });
       console.log("turnCycleOver");
       if (this.state.playerHand.length === 0) {
-        setTimeout(this.roundOver(), 5000);
+        setTimeout(this.roundOver(), 3000);
       }
     }
-
-    this.oppTurn();
+    else{console.log('Error')}
+   
   };
 
   turnOver = (turn) =>{
@@ -532,7 +537,7 @@ export class KoiKoi extends Component {
         <Header title={this.state.headTitle} text={this.state.headTxt} score={this.state.score} topScore={this.state.topScore}/>
         <Container>
           <Playspace>
-
+          <BGM playSound={this.state.bgm}/>
           <Row>{/* Opponent */} 
             <Col size='4'>{/* Hand */}
               {this.state.oppHand.map(item => (
