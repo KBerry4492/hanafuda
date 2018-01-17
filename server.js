@@ -1,9 +1,12 @@
+const path = require('path');
 const express = require("express");
 const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const routes = require("./routes");
 const app = express();
-const http = require("http").Server(app);
+const http = require("http");
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 var io = require("socket.io")(http);
 const PORT = process.env.PORT || 3001;
 
@@ -14,6 +17,12 @@ app.use(bodyParser.json());
 app.use(express.static("client/build"));
 // Add routes, both API and view
 app.use(routes);
+
+// passport config
+const User = require('./models/user');
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // Set up promises with mongoose
 mongoose.Promise = global.Promise;
@@ -37,7 +46,7 @@ var socket = require('socket.io');
 
 
 server = app.listen(PORT, function(){
-    console.log('server is running on port 3001')
+    console.log(`🌎  ==> Server now listening on PORT ${PORT}!`);
 });
 
 io = socket(server);

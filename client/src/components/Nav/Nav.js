@@ -29,6 +29,16 @@ export const Nav = () => (
             Point Values
           </Link>
         </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/login">
+            Login
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/api/user">
+            Logout
+          </Link>
+        </li>
       </ul>
     </div>
   </nav>
