@@ -124,14 +124,25 @@ export class KoiKoi extends Component {
 
     const pScore = this.state.roundPointsP;
     const oScore = this.state.roundPointsO;
+
+    if (oScore === 0 && pScore === 0){
+      if (this.state.dealer === true) {
+        pScore = 6;
+      }
+      else if (this.state.dealer === false) {
+        oScore = 6;
+      }
+    }    
+
     const totalScore = (pScore - oScore);
+
     console.log(pScore);
     console.log(oScore);
     console.log(totalScore);
 
     this.setState({
       headTxt:"Round Over, Refresh to Play Again.",
-      score: totalScore
+      score: (this.state.score + totalScore)
     }, () => {
       if (this.state.score > this.state.topScore) {
         this.setState({
