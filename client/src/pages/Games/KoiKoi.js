@@ -27,7 +27,7 @@ export class KoiKoi extends Component {
   };
 
   componentDidMount() {
-    this.setState({ data: this.shuffleData(data) });    
+    this.setState({ deck: this.shuffleData(data) }, () => this.dealCards());    
   };
 
 
@@ -41,7 +41,6 @@ export class KoiKoi extends Component {
       i--;
     }
 
-    this.dealCards();    
     return data; 
 
   };//end shuffle.
@@ -107,9 +106,46 @@ export class KoiKoi extends Component {
     })
   };//End dealing
 
-  roundOver = () => {
+  resetData = data => {
     this.setState({
-      headTxt:"Round Over, Refresh to Play Again."
+      field: [],
+      playerHand: [],
+      oppHand: [],
+      monthCard:0,
+      turn: true,
+      roundPointsP: 0,
+      roundPointsO: 0
+    }, () => {
+      this.setState({ deck: this.shuffleData(data) }, () => this.dealCards()); 
+    });
+  };
+
+  roundOver = () => {
+
+    const pScore = this.state.roundPointsP;
+    const oScore = this.state.roundPointsO;
+    const totalScore = (pScore - oScore);
+    console.log(pScore);
+    console.log(oScore);
+    console.log(totalScore);
+
+    this.setState({
+      headTxt:"Round Over, Refresh to Play Again.",
+      score: totalScore
+    }, () => {
+      if (this.state.score > this.state.topScore) {
+        this.setState({
+          topScore:this.state.score
+        })
+      }
+      else if (this.state.score > 0) {
+        this.resetData();
+      }
+      else if (this.state.score <= 0) {
+        this.setState({
+          headTxt:"Game Over, Refresh to Play Again."
+        })
+      }
     });
     console.log("Round Over, Refresh to Play Again.")
   };//end of round
@@ -134,6 +170,15 @@ export class KoiKoi extends Component {
     const Animals = Matches.filter(item => {
         return item.type.includes("animal")
       });
+    const Poems = Matches.filter(item => {
+        return item.type.includes("poem")
+      });
+    const Blues = Matches.filter(item => {
+        return item.type.includes("blue")
+      });
+    const InoShikaCho = Matches.filter(item => {
+        return item.type.includes("ino") || item.type.includes("shika")|| item.type.includes("cho")
+      });
     const Brights = Matches.filter(item => {
         return (item.type.includes("bright" ) && (item.type.includes("rain") === false))
       });
@@ -152,23 +197,42 @@ export class KoiKoi extends Component {
     if (Animals.length >= 5) {
       newPoints += (Animals.length - 4);
     }
-    if (Brights.length === 3) {
+    if (Poems.length === 3) {
+      newPoints += 5;
+    }
+    if (Blues.length === 3) {
+      newPoints += 5;
+    }
+    if (InoShikaCho.length === 3) {
+      newPoints += 5;
+    }
+    if (Brights.length === 3 && Rain.length === 0) { 
+      newPoints += (6);
+    }
+    if (Brights.length === 4 && Rain.length === 0) { 
+      newPoints += (10);
+    }
+    if (Brights.length === 3 && Rain.length === 1) { 
       newPoints += (8);
+    }
+    if (Brights.length === 4 && Rain.length === 1) { 
+      newPoints += (15);
     }
 
     if (turn === 'player') {
       this.setState({
-        roundPointsP: (this.state.roundPointsP + newPoints)
+        roundPointsP: newPoints
       }, () => this.oppTurn());
     }
     else if (turn === 'opponent') {
       this.setState({
-        roundPointsO: (this.state.roundPointsO + newPoints)
-      });
-      console.log("turnCycleOver");
-      if (this.state.playerHand.length === 0) {
-        setTimeout(this.roundOver(), 3000);
-      }
+        roundPointsO: newPoints
+      }, () => {
+            console.log("turnCycleOver");
+            if (this.state.playerHand.length === 0) {
+              setTimeout(this.roundOver(), 2000);
+            }
+          });
     }
     else{console.log('Error')}
    
@@ -182,7 +246,6 @@ export class KoiKoi extends Component {
     else if (turn === 'opponent') {
       this.checkPoints('opponent');
       console.log("turnCycleOver");
-
     }
   };//end of turn
 
@@ -531,7 +594,6 @@ export class KoiKoi extends Component {
 
     else{} //if not don't
 
-    
   }; //end handleClick 
 
   render() {let iter = 0;
