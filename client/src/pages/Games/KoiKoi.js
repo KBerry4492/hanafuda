@@ -21,6 +21,8 @@ export class KoiKoi extends Component {
     oppMatch: [],
     monthCard:0,
     turn: true,
+    roundPointsP: 0,
+    roundPointsO: 0,
     dealer: true
   };
 
@@ -53,10 +55,9 @@ export class KoiKoi extends Component {
     for (let i = 0; i < 12; i++) {
       
       for (let j = 0; j < dataArray.length; j++) {
-
         smallArray = dataArray.filter(item => {
           return item.month === months[i]
-        });
+        })
       }//for each month push the cards associated with the month into an array
 
       bigArray.push(smallArray);
@@ -65,7 +66,8 @@ export class KoiKoi extends Component {
     for (var a = 0; a < bigArray.length; a++) {
       if(bigArray[a].length >= 3){
         console.log("redeal");
-        this.dealCards();
+        console.log(bigArray[a]);
+        this.shuffleData(this.state.data);
       }
     }
 
@@ -94,8 +96,10 @@ export class KoiKoi extends Component {
 
     this.newCardArray(board);
 
+    const ranId = (Math.floor(Math.random() * deck.length));
+
     this.setState({
-      monthCard: deck[0],
+      monthCard: deck[ranId],
       deck: deck,
       playerHand: pHand,
       field: board,
@@ -107,17 +111,73 @@ export class KoiKoi extends Component {
     console.log("Round Over, Refresh to Play Again.")
   };//end of round
 
-  turnOver = (turn) =>{
-    const whoseTurn = turn;
-    if (whoseTurn === 'player') {
-      console.log("player turn over");
-      this.oppTurn();
+  checkPoints = (turn) => {
+    let Matches = 0;
+    if (turn === 'player') {
+      Matches = this.state.playerMatch;
     }
-    else if (whoseTurn === 'opponent') {
+    else if (turn === 'opponent') {
+      Matches = this.state.oppMatch;
+    }
+    else{console.log('Error at checkPoints')}
+    
+    const Plains = Matches.filter(item => {
+        return item.type.includes("plains")
+      });
+    const Ribbons = Matches.filter(item => {
+        return item.type.includes("ribbon")
+      });
+    const Animals = Matches.filter(item => {
+        return item.type.includes("animal")
+      });
+    const Brights = Matches.filter(item => {
+        return (item.type.includes("bright" ) && (item.type.includes("rain") === false))
+      });
+    const Rain = Matches.filter(item => {
+        return item.type.includes("rain")
+      });
+
+    let newPoints = 0;
+
+    if (Plains.length >= 10) {
+      newPoints += (Plains.length - 9)
+    }
+    if (Ribbons.length >= 5) {
+      newPoints += (Ribbons.length - 4)
+    }
+    if (Animals.length >= 5) {
+      newPoints += (Animals.length - 4)
+    }
+    if (Brights.length === 3) {
+      newPoints += (8)
+    }
+
+    if (turn === 'player') {
+      // this.setState({
+      //   roundPointsP: (this.state.roundPointsP + newPoints)
+      // }, () => )
+      
+    }
+    else if (turn === 'opponent') {
+
       console.log("turnCycleOver");
       if (this.state.playerHand.length === 0) {
         setTimeout(this.roundOver(), 5000);
       }
+    }
+
+    this.oppTurn();
+  };
+
+  turnOver = (turn) =>{
+    if (turn === 'player') {
+      this.checkPoints('player');
+      console.log("player turn over");
+    }
+    else if (turn === 'opponent') {
+      this.checkPoints('opponent');
+      console.log("turnCycleOver");
+
     }
   };//end of turn
 
@@ -143,7 +203,7 @@ export class KoiKoi extends Component {
     else if(turn === 'opponent'){
       Matches = this.state.oppMatch;
     }
-    else{ alert("Error!") }
+    else{ console.log("Error at autoDeck") }
 
     if (toMatch.length >= 1) { hasMatches = true; }   
 
@@ -162,6 +222,8 @@ export class KoiKoi extends Component {
       Matches.push(topCard);
 
       let newDeck = deck.slice(1);
+      console.log('newDeck');
+      console.log(newDeck);
 
       this.setState({deck: newDeck});
 
@@ -180,7 +242,7 @@ export class KoiKoi extends Component {
             oppMatch: Matches
           }, () => this.turnOver('opponent'))
         }
-      else{console.log("Error")}
+      else{console.log("Error at autoDeck2")}
     }
 
     else{
@@ -203,7 +265,7 @@ export class KoiKoi extends Component {
             deck: newDeck
           }, () => this.turnOver('opponent'))
         }
-      else{console.log("Error")}
+      else{console.log("Error at autoDeck3")}
     }
   };//the deck turn
 
