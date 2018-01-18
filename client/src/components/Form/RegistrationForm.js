@@ -2,11 +2,7 @@ import React from "react";
 
 export const RegistrationForm = props =>
 <div className="form-group">  
-	<form action="/login" method="post">
-	  <div>
-	      <label>Email:</label>
-	      <input type="text" name="email"/>
-	  </div>
+	<form action="/register" method="post">
 	  <div>
 	      <label>Username:</label>
 	      <input type="text" name="username"/>

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Route, Redirect } from 'react-router-dom';
 import {Header} from "../../components/Nav";
 import {Container, Row, Col, Playspace} from "../../components/Grid";
 import {CardStock, CardBack, GameCard, MatchCard} from "../../components/Deck";
@@ -23,13 +24,20 @@ export class KoiKoi extends Component {
     roundPointsP: 0,
     roundPointsO: 0,
     bgm:true,
-    dealer: true
+    dealer: true,
+    isLoggedIn: true
   };
 
   componentDidMount() {
-    this.setState({ deck: this.shuffleData(this.state.cardDeck) }, () => this.dealCards());
+    this.setState({ deck: this.shuffleData(this.state.cardDeck), isLoggedIn: this.loginCheck() }, () => this.dealCards());
   };
 
+  loginCheck() {
+    if (!this.state.isLoggedIn) {
+      return (this.setState({ isLoggedIn: false }))
+    }
+    console.log("checked");
+  }
 
   shuffleData = deck => {
     let i = deck.length - 1;
