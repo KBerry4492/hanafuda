@@ -3,16 +3,16 @@ import {Header} from "../../components/Nav";
 import {Container, Row, Col, Playspace} from "../../components/Grid";
 import {CardStock, CardBack, GameCard, MatchCard} from "../../components/Deck";
 import {BGM} from "../../components/Audio";
-import data from "../../components/Deck/cards";
+import cardDeck from "../../components/Deck/cards";
 
 export class KoiKoi extends Component {
   state = {
-    data,
+    cardDeck: cardDeck,
     score: 0,
     topScore: 0,
     headTitle:"KoiKoi",
     headTxt: "Player One starts",
-    deck: data,
+    deck: 0,
     field: [],
     playerHand: [],
     playerMatch: [],
@@ -27,21 +27,20 @@ export class KoiKoi extends Component {
   };
 
   componentDidMount() {
-    this.setState({ deck: this.shuffleData(data) }, () => this.dealCards());    
+    this.setState({ deck: this.shuffleData(this.state.cardDeck) }, () => this.dealCards());
   };
 
 
-  shuffleData = data => {
-    let i = data.length - 1;
+  shuffleData = deck => {
+    let i = deck.length - 1;
     while (i > 0) {
       const j = Math.floor(Math.random() * (i + 1));
-      const temp = data[i];
-      data[i] = data[j];
-      data[j] = temp;
+      const temp = deck[i];
+      deck[i] = deck[j];
+      deck[j] = temp;
       i--;
     }
-
-    return data; 
+    return deck; 
 
   };//end shuffle.
 
@@ -66,7 +65,7 @@ export class KoiKoi extends Component {
       if(bigArray[a].length >= 3){
         console.log("redeal");
         console.log(bigArray[a]);
-        this.shuffleData(this.state.data);
+        this.shuffleData(this.state.cardDeck);
       }
     }
 
@@ -74,49 +73,55 @@ export class KoiKoi extends Component {
 
   dealCards = data => {
 
-    let deck = this.state.deck;
+    let newDeck = [...this.state.deck];
     let pHand = this.state.playerHand;
     let board = this.state.field;
     let oHand = this.state.oppHand;
 
     for (var j = 0; j < 2; j++) {
+      console.log(this.state.cardDeck);
 
       for (var i = 0; i < 4; i++) {
-        pHand.push(deck.splice(0, 1)[0]);
+        pHand.push(newDeck.splice(0, 1)[0]);
       }
       for (var k = 0; k < 4; k++) {
-        board.push(deck.splice(0, 1)[0]);
+        board.push(newDeck.splice(0, 1)[0]);
       }
       for (var l = 0; l < 4; l++) {
-        oHand.push(deck.splice(0, 1)[0]);
+        oHand.push(newDeck.splice(0, 1)[0]);
       }
-
     }
 
     this.newCardArray(board);
 
-    const ranId = (Math.floor(Math.random() * deck.length));
+    const ranId = (Math.floor(Math.random() * newDeck.length));
 
     this.setState({
-      monthCard: deck[ranId],
-      deck: deck,
+      monthCard: newDeck[ranId],
+      deck: newDeck,
       playerHand: pHand,
       field: board,
       oppHand: oHand
+    }, () => {
+      if (this.state.dealer === false) { this.oppTurn() }
     })
   };//End dealing
 
   resetData = data => {
     this.setState({
+      headTxt: "Player One starts",
+      deck: this.shuffleData(this.state.cardDeck),
       field: [],
       playerHand: [],
+      playerMatch: [],
       oppHand: [],
-      monthCard:0,
+      oppMatch: [],
       turn: true,
       roundPointsP: 0,
       roundPointsO: 0
-    }, () => {
-      this.setState({ deck: this.shuffleData(data) }, () => this.dealCards()); 
+    }, () => { console.log("deckreset")
+      console.log(this.state.cardDeck)
+      this.dealCards() 
     });
   };
 
@@ -141,24 +146,49 @@ export class KoiKoi extends Component {
     console.log(totalScore);
 
     this.setState({
-      headTxt:"Round Over, Refresh to Play Again.",
+      headTxt:"Round Over, Tallying Scores.",
       score: (this.state.score + totalScore)
-    }, () => {
+    }, () => { 
+
       if (this.state.score > this.state.topScore) {
         this.setState({
           topScore:this.state.score
         })
       }
-      else if (this.state.score > 0) {
-        this.resetData();
+
+      if (this.state.score > 0) {
+
+        if (pScore > oScore) {
+          this.setState({
+            dealer:true,
+            headTxt:"Round Over, Player Wins.  Next Round."
+          }, () => { setTimeout(() => this.resetData(), 5000) });
+        }
+        else if (pScore < oScore) {
+          this.setState({
+            dealer:false,
+            headTxt:"Round Over, Computer Wins.  Next Round."
+          }, () => { setTimeout(() => this.resetData(), 5000) });
+        }
+        else{
+          this.setState({
+            dealer:true,
+            headTxt:"Round Over, Tie.  Next Round."
+          }, () => { setTimeout(() => this.resetData(), 5000) });
+        }
+
+        
+
       }
+
       else if (this.state.score <= 0) {
         this.setState({
           headTxt:"Game Over, Refresh to Play Again."
         })
       }
+
     });
-    console.log("Round Over, Refresh to Play Again.")
+    console.log("Round Over, Play Again?")
   };//end of round
 
   checkPoints = (turn) => {
@@ -261,6 +291,8 @@ export class KoiKoi extends Component {
   };//end of turn
 
   autoDeck = (turn) => {
+    console.log("At autoDeck");
+    console.log(this.state.cardDeck);
 
     let deck = this.state.deck;
     let field = this.state.field;
@@ -357,6 +389,7 @@ export class KoiKoi extends Component {
   oppTurn = () => {
 
     console.log("oppTurn")
+    console.log(this.state.cardDeck);
 
     let oHasMatches = false;
     let oMatches = this.state.oppMatch;
@@ -458,6 +491,8 @@ export class KoiKoi extends Component {
   }; //end opp turn
 
   playerTurn = (cardClicked, fieldCard) => {
+    console.log("At playerTurn");
+    console.log(this.state.cardDeck);
 
     let hasMatches = false;
     let Field = this.state.field;
@@ -584,6 +619,7 @@ export class KoiKoi extends Component {
 
   handleItemClick = card => {
     console.log("handleClick")
+    console.log(this.state.cardDeck);
 
     const turn = this.state.turn;
 
@@ -697,7 +733,7 @@ export class KoiKoi extends Component {
 
              <CardBack/>{/* Deck */}
 
-             <a href="/koikoi" className="resetBtn">Reset</a>
+             <a onClick={() => this.setState({score:0, dealer: true},() => {this.resetData()})} className="resetBtn">Reset</a>
 
 
             </Col>
