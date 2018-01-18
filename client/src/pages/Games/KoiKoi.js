@@ -122,8 +122,8 @@ export class KoiKoi extends Component {
 
   roundOver = () => {
 
-    const pScore = this.state.roundPointsP;
-    const oScore = this.state.roundPointsO;
+    let pScore = this.state.roundPointsP;
+    let oScore = this.state.roundPointsO;
 
     if (oScore === 0 && pScore === 0){
       if (this.state.dealer === true) {
