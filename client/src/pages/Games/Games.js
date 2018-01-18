@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Route, Redirect } from 'react-router-dom';
 // import Jumbotron from '../../components/Jumbotron';
 import { Link } from 'react-router-dom';
 import {Header} from "../../components/Nav";
@@ -8,15 +9,28 @@ import { SlidingPanel } from "../../components/SlidingPanel";
 // import { Input, TextArea, FormBtn } from '../../components/Form';
 import logo from '../../images/wujiFish.png';
 import '../../App.css';
+import API from '../../utils/API';
 
 export class Games extends Component {
   state = {
     user: '',
     headTitle: 'Hanafuda games!',
     headTxt: 'Pick from War, Memory, and Koi Koi!',
-    messages: []
+    messages: [],
+    username: '',
+    password: '',
+    isLoggedIn: true
 
   };
+
+  componentDidMount() { this.loginCheck() }
+
+  loginCheck() {
+    if (!this.state.isLoggedIn) {
+      return (this.setState({ isLoggedIn: false }))
+    }
+    console.log("checked");
+  }
 
   addMessage = data => {
       console.log(data);
@@ -39,6 +53,9 @@ export class Games extends Component {
   };
 
   render() {
+    if (!this.state.isLoggedIn) { 
+      return (<Redirect to='/login' />)
+    }
     return (
       <div className="App">
 

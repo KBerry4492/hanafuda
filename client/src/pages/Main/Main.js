@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { Route, Redirect } from 'react-router-dom';
 import {Header} from "../../components/Nav";
 import { Container } from '../../components/Grid';
 import { Instructions } from '../../components/Instructions';
 import '../../App.css';
+import API from '../../utils/API';
 
 // const io = require('socket.io-client')
 // const socket = io.connect("localhost:3001")
@@ -11,7 +13,10 @@ class Main extends Component {
   state = {
     user: '',
     headTitle: 'Hanafuda card games!',
-    headTxt: 'Pick from War, Memory, and Koi Koi!'
+    headTxt: 'Pick from War, Memory, and Koi Koi!',
+    username: '',
+    password: '',
+    isLoggedIn: true
   };
 
   // componentDidMount() {
@@ -24,6 +29,15 @@ class Main extends Component {
   //     // Update state/game based on returned data
   //   })
   // }
+
+  componentDidMount() { this.loginCheck() }
+
+  loginCheck() {
+    if (!this.state.isLoggedIn) {
+      return (this.setState({ isLoggedIn: false }))
+    }
+    console.log("checked");
+  }
 
   handleInputChange = event => {
     const { name, value } = event.target;
@@ -40,6 +54,9 @@ class Main extends Component {
   };
 
   render() {
+    if (!this.state.isLoggedIn) { 
+      return (<Redirect to='/login' />)
+    }
     return (
       <div className="App">
           <Header title={this.state.headTitle} text={this.state.headTxt} />

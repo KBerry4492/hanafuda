@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Route, Redirect } from 'react-router-dom';
 import {Header} from "../../components/Nav";
 import {Container, Row, Col, Playspace} from "../../components/Grid";
 import {Card} from "../../components/Deck";
@@ -12,12 +13,20 @@ export class Memory extends Component {
     topScore: 0,
     headTxt: "Click a card to gain points",
     headTitle:"Memory",
-    soundPlay:false
+    soundPlay:false,
+    isLoggedIn: true
   };
 
   componentDidMount() {
     this.setState({ data: this.newCardArray(data) });    
   };
+
+  loginCheck() {
+    if (!this.state.isLoggedIn) {
+      return (this.setState({ isLoggedIn: false }))
+    }
+    console.log("checked");
+  }
 
   newCardArray = data => {
     const dataArray = data;
