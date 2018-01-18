@@ -90,13 +90,15 @@ export class War extends Component {
 
     if (topCardP.value > topCardO.value) {
       
-      warWinnings.concat(this.state.pMatch);
-      console.log(warWinnings)
+      for (var i = 0; i < warWinnings.length; i++) {
+        pMatch.push(warWinnings[i]);
+      }
 
       this.setState({
-        pMatch: warWinnings
+        pMatch: pMatch
       }, () => {
           this.setState({
+            headTxt: "Click Deck to begin.",
             pField: [],
             oField: [],
             war: []
@@ -106,12 +108,15 @@ export class War extends Component {
 
     else if (topCardP.value < topCardO.value) {
 
-      warWinnings.concat(this.state.oMatch);
+      for (var i = 0; i < warWinnings.length; i++) {
+        oMatch.push(warWinnings[i]);
+      }
 
       this.setState({
-        oMatch: warWinnings
+        oMatch: oMatch
       }, () => {
           this.setState({
+            headTxt: "Click Deck to begin.",
             pField: [],
             oField: [],
             war: []
@@ -126,7 +131,9 @@ export class War extends Component {
         war: warWinnings
       }, () => {
         console.log(this.state.war)
-        this.newRound();
+        if (this.state.playerDeck.length > 0) {
+          this.newRound();
+        }
       });
     }
         
@@ -169,8 +176,11 @@ export class War extends Component {
     console.log(data);
     console.log(" was clicked. ");
 
+
     if (data.location === "pDeck") {
-      this.newRound();
+      if (this.state.playerDeck.length > 0) {
+        this.newRound();
+      }
     }
 
   };
