@@ -23,6 +23,7 @@
     "axios": "^0.17.1",
     "body-parser": "^1.17.2",
     "cookie-parser": "^1.4.3",
+    "cookie-session": "^2.0.0-beta.3",
     "express": "^4.15.4",
     "false": "^0.0.4",
     "mongoose": "^4.11.7",
