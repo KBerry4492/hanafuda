@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {Header} from "../../components/Nav";
 import {Container, Row, Col, Playspace} from "../../components/Grid";
-import {CardStock, CardBack, GameCard, MatchCard} from "../../components/Deck";
+import {CardBack, GameCard, MatchCard} from "../../components/Deck";
 import data from "../../components/Deck/cards.json";
 import imgSrc from "../../images/cardback5.png";
 
@@ -50,7 +50,7 @@ export class War extends Component {
       pDeck.push(oldDeck.splice(0, 1)[0]);
     }
 
-    for (var j = 0; j < 24; j++) {
+    for (var i = 0; i < 24; i++) {
       oDeck.push(oldDeck.splice(0, 1)[0]);
     }
 
@@ -90,8 +90,8 @@ export class War extends Component {
 
     if (topCardP.value > topCardO.value) {
       
-      for (var i = 0; i < warWinnings.length; i++) {
-        pMatch.push(warWinnings[i]);
+      for (var a = 0; a < warWinnings.length; a++) {
+        pMatch.push(warWinnings[a]);
       }
 
       this.setState({
@@ -108,8 +108,8 @@ export class War extends Component {
 
     else if (topCardP.value < topCardO.value) {
 
-      for (var i = 0; i < warWinnings.length; i++) {
-        oMatch.push(warWinnings[i]);
+      for (var b = 0; b < warWinnings.length; b++) {
+        oMatch.push(warWinnings[b]);
       }
 
       this.setState({
@@ -145,11 +145,6 @@ export class War extends Component {
     let oDeck = this.state.oppDeck;
     let pField = this.state.pField;
     let oField = this.state.oField;
-    let pMatch = this.state.pMatch;
-    let oMatch = this.state.oMatch;
-
-
-
     let topCardP = pDeck.slice(0, 1)[0];
     let topCardO = oDeck.slice(0, 1)[0];
 
