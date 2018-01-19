@@ -8,6 +8,6 @@ export const MatchCard = props => (
     className='matched'
     style={{ left: `${props.position}` }}
   >
-  	<img src = {props.image} className = "cardImg"/>
+  	<img src = {props.image} className = "cardImg" alt="[Card]"/>
   </div>
 );
