@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import { Route, Redirect } from 'react-router-dom';
-// import Jumbotron from '../../components/Jumbotron';
 import { Link } from 'react-router-dom';
-import {Header} from "../../components/Nav";
+import { Header } from "../../components/Nav";
 import { Container } from '../../components/Grid';
 import { SlidingPanel } from "../../components/SlidingPanel";
-// import { List, ListItem } from '../../components/List';
-// import { Input, TextArea, FormBtn } from '../../components/Form';
 import logo from '../../images/wujiFish.png';
 import '../../App.css';
 import API from '../../utils/API';
@@ -58,7 +55,6 @@ export class Games extends Component {
     }
     return (
       <div className="App">
-
 
         <Header title={this.state.headTitle} text={this.state.headTxt} />
           <Container>
