@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Header } from "../../components/Nav";
 import { Container } from '../../components/Grid';
 import { SlidingPanel } from "../../components/SlidingPanel";
 import logo from '../../images/wujiFish.png';
 import '../../App.css';
-import API from '../../utils/API';
 
 export class Games extends Component {
   state = {

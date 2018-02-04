@@ -1,9 +1,6 @@
 import React, { Component } from "react";
-import {Header} from "../../components/Nav";
-import {Container} from "../../components/Grid";
-
-
-
+// import {Header} from "../../components/Nav";
+// import {Container} from "../../components/Grid";
 
 export class Profile extends Component {
   state = {

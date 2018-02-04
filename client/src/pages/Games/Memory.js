@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import {Header} from "../../components/Nav";
 import {Container, Row, Col, Playspace} from "../../components/Grid";
 import {Card} from "../../components/Deck";

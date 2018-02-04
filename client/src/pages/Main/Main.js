@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import {Header} from "../../components/Nav";
 import { Container } from '../../components/Grid';
 import { Instructions } from '../../components/Instructions';
 import '../../App.css';
-import API from '../../utils/API';
+// import API from '../../utils/API';
 
 // const io = require('socket.io-client')
 // const socket = io.connect("localhost:3001")
